@@ -1,0 +1,558 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Share+Tech+Mono&display=swap');
+
+/* Base variables (will change based on theme) */
+:root {
+  --font-main: 'Inter', sans-serif;
+  --font-mono: 'Share Tech Mono', monospace;
+
+  /* Theme: 2015 */
+  --bg-color: #f8f9fa;
+  --text-color: #333333;
+  --accent-color: #0056b3;
+  --card-bg: #ffffff;
+  --border-color: #dddddd;
+  
+  --terminal-bg: #1e1e1e;
+  --terminal-text: #4af626;
+
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+html, body {
+  scroll-behavior: smooth;
+  overflow-x: clip;
+  position: relative;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  position: relative;
+}
+
+/* Initial Load Sequence */
+#initial-load-overlay {
+  transition: opacity 0.8s ease-in-out, visibility 0.8s;
+  z-index: 9999;
+}
+
+#initial-load-overlay.fade-out {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* =========================================
+   2010 "OLD SCHOOL" THEME (FB/Google/YT era)
+   ========================================= */
+body.theme-2015 {
+  --font-main: "lucida grande", tahoma, verdana, arial, sans-serif;
+  --bg-color: #e9eaed; /* Classic FB grey */
+  --text-color: #333333;
+  --accent-color: #3b5998; /* FB blue */
+  --card-bg: #ffffff;
+  --border-color: #bdc7d8; /* FB light border */
+}
+
+.theme-2015 .site-header {
+  background-color: #3b5998;
+  border-bottom: 1px solid #133783;
+  box-shadow: none;
+  color: #ffffff;
+}
+
+.theme-2015 .site-header .text-gray-600 {
+  color: #e1e8ed !important;
+}
+.theme-2015 .site-header .text-gray-600:hover {
+  /* text-decoration: underline; */
+  color: #ffffff !important;
+}
+.theme-2015 .site-header .font-bold {
+  color: #ffffff !important;
+}
+.theme-2015 .site-header span.text-blue-500 {
+  color: #c9d8fa !important;
+}
+
+.theme-2015 .card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 3px; 
+  box-shadow: none; 
+}
+
+.theme-2015 .btn-primary {
+  background-color: #4d90fe;
+  background-image: linear-gradient(to bottom, #4d90fe, #4787ed);
+  color: white !important;
+  border: 1px solid #3079ed;
+  border-radius: 2px;
+  text-shadow: 0 1px rgba(0,0,0,0.1);
+  font-weight: bold;
+}
+.theme-2015 .btn-primary:hover {
+  background-color: #357ae8;
+  background-image: linear-gradient(to bottom, #4d90fe, #357ae8);
+  border: 1px solid #2f5bb7;
+  text-decoration: none !important;
+}
+
+.theme-2015 .resume-btn {
+  background-color: #ffffff;
+  color: #3b5998;
+  border: 1px solid #3b5998;
+  border-radius: 2px;
+  font-weight: bold;
+}
+.theme-2015 .resume-btn:hover {
+  background-color: #f0f4ff;
+  text-decoration: none !important;
+}
+
+.theme-2015 .badge {
+  background-color: #f2f2f2;
+  color: #333333;
+  border: 1px solid #cccccc;
+  border-radius: 2px;
+  padding: .2em .5em;
+  font-weight: normal;
+  font-size: 0.85em; 
+}
+
+/* Typography & Links */
+.theme-2015 h1, .theme-2015 h2, .theme-2015 h3 {
+  font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+  color: #3b5998; /* FB blue for headings */
+}
+
+/* Tailwind Overrides for old-school */
+.theme-2015 .text-blue-500 { color: #3b5998; }
+.theme-2015 .bg-blue-500 { background-color: #3b5998; }
+.theme-2015 .text-gray-600 { color: #333333; }
+.theme-2015 .text-gray-500 { color: #808080; }
+
+/* Timeline specifics */
+.theme-2015 .timeline-icon {
+  background-color: #edeff4 !important;
+  color: #3b5998 !important;
+  border: 1px solid #d8dfea !important;
+}
+
+/* Base Terminal Component (Global Base) */
+.terminal-box {
+  background-color: var(--terminal-bg);
+  color: var(--terminal-text);
+  font-family: var(--font-mono);
+  border-radius: 4px;
+  padding: 1.5rem;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Hide scrollbar on terminal output — auto-scroll is internal only */
+#terminal-output {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+#terminal-output::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+.terminal-header {
+  background-color: #333;
+  color: #ccc;
+  padding: 5px 10px;
+  font-size: 0.8rem;
+  font-family: sans-serif;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+}
+
+.terminal-header .dots {
+  display: flex;
+  gap: 5px;
+}
+.terminal-header .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.dot.red { background: #ff5f56; }
+.dot.yellow { background: #ffbd2e; }
+.dot.green { background: #27c93f; }
+
+/* Terminal component (early 2000s / 2010 tech block override) */
+.theme-2015 .terminal-box {
+  background-color: #000;
+  color: #0f0;
+  font-family: "Courier New", Courier, monospace;
+  border-radius: 0;
+  border: 2px solid #888;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+}
+
+.theme-2015 .terminal-header {
+  background: #d4d0c8; /* Windows 98/XP grey */
+  color: #000;
+  padding: 2px 5px;
+  font-family: Tahoma, sans-serif;
+  border-bottom: 2px solid #fff;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-radius: 0;
+}
+
+.theme-2015 .terminal-header .dot {
+  display: none; /* Hide mac-style dots in 2010 tech */
+}
+
+
+/* =========================================
+   MODERN THEME
+   ========================================= */
+body.theme-modern {
+  --bg-color: #0f172a; /* Tailwind slate-900 */
+  --text-color: #f8fafc; /* Tailwind slate-50 */
+  --accent-color: #3b82f6; /* Tailwind blue-500 */
+  --card-bg: rgba(30, 41, 59, 0.4); 
+  --border-color: rgba(255, 255, 255, 0.08);
+}
+
+.modern-bg-container {
+  display: block;
+}
+body.theme-2015 .modern-bg-container {
+  display: none;
+}
+
+/* Ambient Blobs Animation */
+.ambient-blob {
+  animation: float 20s infinite ease-in-out alternate;
+  pointer-events: none;
+}
+.ambient-blob:nth-child(2) {
+  animation-delay: -5s;
+  animation-duration: 25s;
+}
+
+@keyframes float {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(50px, 50px) scale(1.1); }
+  100% { transform: translate(-30px, 30px) scale(0.9); }
+}
+
+.theme-modern .site-header {
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* Modern Nav Active State */
+.theme-modern .nav-link {
+  position: relative;
+  padding-bottom: 4px;
+}
+
+.theme-modern .nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent-color), #8b5cf6);
+  transition: width 0.3s ease;
+}
+
+.theme-modern .nav-link.active {
+  color: #fff;
+}
+
+.theme-modern .nav-link.active::after {
+  width: 100%;
+}
+
+/* Old School Nav Active State */
+.theme-2015 .nav-link.active {
+  /* color: #3b5998 !important;
+  font-weight: bold; */
+  text-decoration: underline;
+}
+
+.theme-modern .card {
+  background: var(--card-bg);
+  /* backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px); */
+  border: 1px solid var(--border-color);
+  border-radius: 16px; /* modern high border-radius */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.theme-modern .card__wrap {
+  height: 100%;  
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.theme-modern .card.hover-modern-glow:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 40px rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.5);
+}
+
+.theme-modern .btn-primary {
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  color: white;
+  border: none;
+  border-radius: 30px;
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.theme-modern .btn-primary:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
+}
+
+/* Resume Button — ghost / glass style */
+.theme-modern .resume-btn {
+  color: #93c5fd;
+  border: 1px solid rgba(59, 130, 246, 0.4);
+  border-radius: 30px;
+  background: rgba(59, 130, 246, 0.06);
+  backdrop-filter: blur(6px);
+  transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+.theme-modern .resume-btn:hover {
+  background: rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.7);
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.3);
+  transform: scale(1.04);
+  color: #bfdbfe;
+}
+
+.theme-modern .badge {
+  background: rgba(59, 130, 246, 0.1);
+  color: #93c5fd; /* blue-300 */
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 20px;
+  padding: 0.4em 1em;
+  font-weight: 500;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.theme-modern .hover-modern-glow:hover .badge {
+  background: rgba(59, 130, 246, 0.2);
+  border-color: rgba(59, 130, 246, 0.4);
+}
+
+/* Modern terminal tweak to Code Editor style */
+.theme-modern .terminal-box {
+  background-color: rgba(15,23,42,0.8);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.05);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+  border-radius: 12px;
+}
+
+/* Modern IDE-Style Typography */
+.theme-modern .code-line {
+  font-family: 'Share Tech Mono', monospace;
+  color: #93c5fd; /* blue-300 */
+  text-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
+}
+
+.theme-modern .terminal-header {
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  background-color: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.theme-modern .terminal-title {
+  color: transparent; /* hide original text */
+  position: relative;
+}
+.theme-modern .terminal-title::after {
+  content: 'git-deploy — ~/Portfolio';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #94a3b8; /* slate-400 */
+  font-family: var(--font-main);
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  width: max-content;
+}
+
+/* Timeline Active State */
+.timeline-item.is-active .timeline-icon {
+  background-color: var(--accent-color) !important; /* Forces the blue glow */
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.6);
+  border-color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Fix for AOS enabling properly */
+body.theme-2015 [data-aos] {
+  opacity: 1 !important;
+  transform: translate(0) scale(1) !important;
+  transition: none !important;
+}
+
+/* Toggle Switch Styles */
+.theme-switch-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.theme-switch {
+  display: inline-block;
+  height: 30px;
+  position: relative;
+  width: 54px;
+}
+
+.theme-switch input {
+  display: none;
+}
+
+.slider {
+  background-color: #ccc;
+  bottom: 0;
+  cursor: pointer;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: .4s;
+}
+
+.slider:before {
+  background-color: #fff;
+  bottom: 3px;
+  content: "";
+  height: 24px;
+  left: 3px;
+  position: absolute;
+  transition: .4s;
+  width: 24px;
+}
+
+input:checked + .slider {
+  background-color: #8b5cf6;
+}
+
+input:checked + .slider:before {
+  transform: translateX(24px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+/* Mobile Menu & Hamburger */
+#mobile-menu-toggle.open span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+#mobile-menu-toggle.open span:nth-child(2) {
+  opacity: 0;
+}
+#mobile-menu-toggle.open span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* White bars when menu open over dark Modern backdrop */
+.theme-modern #mobile-menu-toggle.open span {
+  background-color: #ffffff;
+}
+
+/* Mobile Nav Overlay — hidden by default */
+#mobile-nav {
+  visibility: hidden;
+  opacity: 0;
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.35s ease,
+              visibility 0s linear 0.35s;
+}
+
+#mobile-nav.open {
+  visibility: visible;
+  opacity: 1;
+  transform: translateX(0);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.35s ease,
+              visibility 0s linear 0s;
+}
+
+/* Modern Theme Mobile Nav Backdrop */
+.theme-modern #mobile-nav .mobile-nav-backdrop {
+  background: rgba(10, 15, 30, 0.97);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+.theme-modern .mobile-nav-link {
+  color: #e2e8f0;
+  transition: color 0.25s ease, letter-spacing 0.25s ease;
+  letter-spacing: 0.05em;
+}
+
+.theme-modern .mobile-nav-link:hover,
+.theme-modern .mobile-nav-link.active {
+  color: #60a5fa;
+  letter-spacing: 0.1em;
+}
+
+/* Old School Theme Mobile Nav Backdrop */
+.theme-2015 #mobile-nav .mobile-nav-backdrop {
+  background: #fff;
+}
+
+.theme-2015 .mobile-nav-link {
+  color: #3b5998;
+  font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+}
+
+.theme-2015 .mobile-nav-link:hover,
+.theme-2015 .mobile-nav-link.active {
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+/* Header Refinements */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 150; /* Must be above #mobile-nav (z-100) */
+  width: 100%;
+}
+
+.header-content-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media (max-width: 640px) {
+  .theme-switch-wrapper {
+    gap: 0.5rem !important;
+    padding-left: 0.5rem !important;
+    margin-left: 0.5rem !important;
+  }
+}
