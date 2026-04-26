@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X, Github, Linkedin, FileText } from "lucide-react"
+import { Menu, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { ThemeToggle } from "./theme-toggle"
 
@@ -20,7 +20,7 @@ export const Navigation: React.FC = () => {
   const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
-    setMounted(true)
+    setTimeout(() => setMounted(true), 0)
     const handleScroll = () => {
       setScrolled(window.scrollY > 50)
       

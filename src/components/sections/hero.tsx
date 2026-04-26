@@ -2,7 +2,7 @@
 
 import React from "react"
 import { motion } from "framer-motion"
-import { Mail, ArrowRight } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 
 export const Hero: React.FC = () => {
   return (
@@ -54,7 +54,7 @@ export const Hero: React.FC = () => {
             className="group relative px-8 py-4 bg-text-base text-bg-base font-bold rounded-full overflow-hidden transition-all hover:scale-105 active:scale-95"
           >
             <div className="relative z-10 flex items-center gap-2">
-              Let's Connect <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+              Let&apos;s Connect <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
             </div>
             <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary opacity-0 group-hover:opacity-10 transition-opacity" />
           </a>

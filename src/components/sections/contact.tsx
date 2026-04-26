@@ -2,7 +2,7 @@
 
 import React from "react"
 import { motion } from "framer-motion"
-import { Send, Mail, MapPin, ArrowUpRight } from "lucide-react"
+import { Mail, MapPin, ArrowUpRight } from "lucide-react"
 
 export const Contact: React.FC = () => {
   return (
@@ -49,7 +49,7 @@ export const Contact: React.FC = () => {
             >
               <h3 className="text-3xl font-bold mb-6">Start a Project</h3>
               <p className="text-text-muted mb-10">
-                Whether you have a specific brief or just an idea, let's turn it into a high-performance reality.
+                Whether you have a specific brief or just an idea, let&apos;s turn it into a high-performance reality.
               </p>
               
               <a 

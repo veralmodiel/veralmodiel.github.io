@@ -6,12 +6,12 @@ import { useTheme } from "next-themes"
 import { motion, AnimatePresence } from "framer-motion"
 
 export function ThemeToggle() {
-  const { setTheme, theme, mounted } = useTheme()
+  const { setTheme, theme } = useTheme()
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
 
   // Avoid hydration mismatch
   const [isMounted, setIsMounted] = React.useState(false)
-  React.useEffect(() => setIsMounted(true), [])
+  React.useEffect(() => { setTimeout(() => setIsMounted(true), 0) }, [])
 
   if (!isMounted) return null
 

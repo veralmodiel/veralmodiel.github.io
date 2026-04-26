@@ -2,12 +2,6 @@
 
 import React, { useState, useEffect, useRef } from "react"
 import { useTheme } from "next-themes"
-import { motion, AnimatePresence } from "framer-motion"
-
-interface TerminalLine {
-  text: string
-  type: "command" | "output" | "error"
-}
 
 const modernText = [
   "git init almodiel-portfolio",
@@ -39,9 +33,11 @@ export const Terminal: React.FC = () => {
 
   useEffect(() => {
     // Reset when theme changes
-    setLines([])
-    setCurrentLineIndex(0)
-    setCurrentCharIndex(0)
+    setTimeout(() => {
+      setLines([])
+      setCurrentLineIndex(0)
+      setCurrentCharIndex(0)
+    }, 0)
   }, [theme])
 
   useEffect(() => {

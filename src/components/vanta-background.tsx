@@ -2,11 +2,12 @@
 
 import React, { useEffect, useRef, useState } from "react"
 import * as THREE from "three"
-// @ts-ignore
+// @ts-expect-error - vanta does not have typescript definitions
 import NET from "vanta/dist/vanta.net.min"
 import { useTheme } from "next-themes"
 
 export const VantaBackground: React.FC = () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [vantaEffect, setVantaEffect] = useState<any>(null)
   const vantaRef = useRef<HTMLDivElement>(null)
   const { theme } = useTheme()
