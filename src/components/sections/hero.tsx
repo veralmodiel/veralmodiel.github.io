@@ -29,7 +29,7 @@ export const Hero: React.FC = () => {
           transition={{ duration: 0.7, delay: 0.1 }}
           className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 leading-[1.1]"
         >
-          Architecting <span className="text-gradient">Digital Experiences</span> with Precision.
+          Engineering <span className="text-gradient">Digital Experiences</span> with Precision.
         </motion.h1>
 
         {/* Subtext */}
@@ -39,7 +39,7 @@ export const Hero: React.FC = () => {
           transition={{ duration: 0.7, delay: 0.2 }}
           className="text-lg md:text-xl text-text-muted max-w-2xl mx-auto mb-12 leading-relaxed"
         >
-          Senior Full-Stack Web Developer with 9+ years of expertise. Specializing in WordPress ecosystems, Shopify, and Webflow—with a <span className="text-text-base font-bold">proactive recent focus on Next.js since April 20, 2026.</span>
+          Senior Full-Stack Web Developer with 9+ years of expertise. Specializing in WordPress ecosystems, Shopify, and Webflow—with a <span className="text-text-base font-bold">proactive recent focus on Next.js</span>
         </motion.p>
 
         {/* Actions */}

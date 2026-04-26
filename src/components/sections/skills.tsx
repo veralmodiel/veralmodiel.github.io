@@ -27,17 +27,17 @@ const skillGroups: SkillGroup[] = [
     size: "large"
   },
   {
-    title: "E-Commerce",
+    title: "Platforms & CMS",
     Icon: Globe,
     iconColor: "text-purple-400",
-    skills: ["Shopify", "WooCommerce", "Advanced Checkout"],
+    skills: ["WordPress", "Shopify", "Webflow", "WooCommerce"],
     size: "small"
   },
   {
-    title: "Creative Tools",
+    title: "Design-to-Code",
     Icon: Wand2,
     iconColor: "text-pink-400",
-    skills: ["Figma", "Adobe XD", "GSAP"],
+    skills: ["Figma", "Photoshop", "Illustrator", "Adobe XD"],
     size: "small"
   },
   {

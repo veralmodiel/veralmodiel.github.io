@@ -60,7 +60,7 @@ export default function Home() {
         <Education />
         <Contact />
         
-        <footer className="py-20 border-t border-border-subtle text-center">
+        <footer className="py-10 border-t border-border-subtle text-center">
           <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-6 text-text-muted text-sm">
             <p>&copy; 2026 Ver Almodiel. All rights reserved.</p>
             <div className="flex gap-8">
@@ -68,7 +68,7 @@ export default function Home() {
               <a href="https://linkedin.com/in/veralmodiel" target="_blank" className="hover:text-text-base transition-colors">LinkedIn</a>
               <a href="https://drive.google.com/file/d/1MHM-fJmBDdN5H8YCWkCLjUu_o_79LyjR/view" target="_blank" className="hover:text-text-base transition-colors">Resume</a>
             </div>
-            <p className="font-mono">Built with Next.js 15 & Framer Motion</p>
+            <p className="font-mono">Built with Next.js 16 & Framer Motion</p>
           </div>
         </footer>
       </div>
