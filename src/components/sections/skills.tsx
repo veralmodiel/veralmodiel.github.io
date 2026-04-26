@@ -88,7 +88,7 @@ export const Skills: React.FC = () => {
               transition={{ delay: index * 0.1, duration: 0.8 }}
               viewport={{ once: true, amount: 0.3, margin: "-100px" }}
               className={cn(
-                "glass glow-border p-8 rounded-[32px] group transition-all duration-500",
+                "glass glow-border p-8 rounded-[32px] group transition-colors duration-500",
                 group.size === "large" ? "md:col-span-2" : "md:col-span-1"
               )}
             >

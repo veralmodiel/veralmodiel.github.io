@@ -62,7 +62,7 @@ export const Experience: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1, duration: 0.8 }}
               viewport={{ once: true, amount: 0.3, margin: "-100px" }}
-              className="group relative glass p-8 md:p-12 rounded-[40px] border border-border-subtle hover:border-primary/20 transition-all"
+              className="group relative glass p-8 md:p-12 rounded-[40px] border border-border-subtle hover:border-primary/20 transition-colors"
             >
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <div className="flex-1">

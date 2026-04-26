@@ -54,7 +54,7 @@ export default function Home() {
       <Navigation />
       
       <div className="relative z-10">
-        <Hero />
+        <Hero isLoaded={!isLoading} />
         <Skills />
         <Experience />
         <Education />

@@ -4,14 +4,18 @@ import React from "react"
 import { motion } from "framer-motion"
 import { ArrowRight } from "lucide-react"
 
-export const Hero: React.FC = () => {
+interface HeroProps {
+  isLoaded?: boolean
+}
+
+export const Hero: React.FC<HeroProps> = ({ isLoaded = true }) => {
   return (
     <section id="about" className="relative min-h-screen flex items-center justify-center pt-20 px-4">
       <div className="max-w-4xl w-full text-center">
         {/* Badge */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5 }}
           className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold uppercase tracking-widest mb-8"
         >
@@ -25,7 +29,7 @@ export const Hero: React.FC = () => {
         {/* Headline */}
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
+          animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.7, delay: 0.1 }}
           className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 leading-[1.1]"
         >
@@ -35,7 +39,7 @@ export const Hero: React.FC = () => {
         {/* Subtext */}
         <motion.p
           initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
+          animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.7, delay: 0.2 }}
           className="text-lg md:text-xl text-text-muted max-w-2xl mx-auto mb-12 leading-relaxed"
         >
@@ -45,7 +49,7 @@ export const Hero: React.FC = () => {
         {/* Actions */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
+          animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.7, delay: 0.3 }}
           className="flex flex-col sm:flex-row gap-4 justify-center items-center"
         >
@@ -71,9 +75,9 @@ export const Hero: React.FC = () => {
         {/* Social Links / Industry Badges */}
         <motion.div
            initial={{ opacity: 0 }}
-           animate={{ opacity: 1 }}
+           animate={isLoaded ? { opacity: 1 } : { opacity: 0 }}
            transition={{ duration: 1, delay: 0.8 }}
-           className="mt-16 flex flex-wrap gap-8 justify-center grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all"
+           className="mt-16 flex flex-wrap gap-8 justify-center grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-[filter]"
         >
           <a href="https://linkedin.com/in/veralmodiel" target="_blank" className="text-xs uppercase tracking-widest font-bold hover:text-blue-400 transition-colors">LinkedIn</a>
           <a href="https://github.com/veralmodiel" target="_blank" className="text-xs uppercase tracking-widest font-bold hover:text-white transition-colors">GitHub</a>

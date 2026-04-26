@@ -45,7 +45,7 @@ export const Contact: React.FC = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.2 }}
               viewport={{ once: true, amount: 0.3, margin: "-100px" }}
-              className="glass p-12 rounded-[60px] border border-border-subtle flex flex-col items-center text-center group transition-all hover:border-primary/30"
+              className="glass p-12 rounded-[60px] border border-border-subtle flex flex-col items-center text-center group transition-colors hover:border-primary/30"
             >
               <h3 className="text-3xl font-bold mb-6">Start a Project</h3>
               <p className="text-text-muted mb-10">

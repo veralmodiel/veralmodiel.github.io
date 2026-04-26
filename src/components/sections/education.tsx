@@ -6,9 +6,15 @@ import { GraduationCap } from "lucide-react"
 
 export const Education: React.FC = () => {
   return (
-    <section id="education" className="py-32 relative z-10">
+    <section id="education" className="py-20 relative z-10">
       <div className="max-w-6xl mx-auto px-4">
-        <div className="glass p-12 md:p-20 rounded-[60px] relative overflow-hidden border border-border-subtle">
+        <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+        viewport={{ once: true, amount: 0.3, margin: "-100px" }}
+        className="glass p-12 md:p-20 rounded-[60px] relative overflow-hidden border border-border-subtle"
+        >
           {/* Background Accent */}
           <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 blur-[100px] pointer-events-none" />
           
@@ -18,15 +24,9 @@ export const Education: React.FC = () => {
             </div>
             
             <div>
-              <motion.h2 
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true, amount: 0.3, margin: "-100px" }}
-                className="text-3xl md:text-5xl font-extrabold tracking-tight mb-4"
-              >
+              <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-4">
                 Academic <span className="text-gradient">Foundation</span>
-              </motion.h2>
+              </h2>
               <h3 className="text-xl md:text-2xl font-bold text-text-base mb-2">Bachelor of Science in Information Technology</h3>
               <p className="text-text-muted text-lg mb-6">University of St. La Salle • Class of 2015</p>
               
@@ -40,7 +40,7 @@ export const Education: React.FC = () => {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   )
