@@ -31,7 +31,7 @@ const skillGroups: SkillGroup[] = [
     Icon: Globe,
     iconColor: "text-purple-400",
     skills: ["WordPress", "Shopify", "Webflow", "WooCommerce"],
-    size: "small"
+    size: "large"
   },
   {
     title: "Design-to-Code",
@@ -62,7 +62,7 @@ const skillGroups: SkillGroup[] = [
 
 export const Skills: React.FC = () => {
   return (
-    <section id="skills" className="py-32 relative z-10">
+    <section id="skills" className="py-20 md:py-32 relative z-10">
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
           <div className="max-w-xl">
@@ -79,7 +79,7 @@ export const Skills: React.FC = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
           {skillGroups.map((group, index) => (
             <motion.div
               key={group.title}
@@ -89,7 +89,7 @@ export const Skills: React.FC = () => {
               viewport={{ once: true, amount: 0.3, margin: "-100px" }}
               className={cn(
                 "glass glow-border p-8 rounded-[32px] group transition-colors duration-500",
-                group.size === "large" ? "md:col-span-2" : "md:col-span-1"
+                group.size === "large" ? "md:col-span-6" : "md:col-span-4"
               )}
             >
               <div className="flex items-center gap-4 mb-6">

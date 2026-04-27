@@ -6,7 +6,7 @@ import { Mail, MapPin, ArrowUpRight } from "lucide-react"
 
 export const Contact: React.FC = () => {
   return (
-    <section id="contact" className="py-32 relative z-10">
+    <section id="contact" className="py-20 md:py-32 relative z-10">
       <div className="max-w-6xl mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-16 items-center">
           <div>
@@ -60,7 +60,7 @@ export const Contact: React.FC = () => {
               </a>
               
               <p className="mt-8 text-xs font-bold text-text-muted uppercase tracking-widest">
-                Typical reply in 12-24 hours
+                Will reply as soon as possible.
               </p>
             </motion.div>
             

@@ -24,7 +24,7 @@ const experiences = [
   {
     title: "Webmaster / WordPress Developer",
     period: "2018",
-    company: "VYomingo Jewellers",
+    company: "VYDomingo Jewellers",
     description: "In-house e-commerce catalog management and site enhancements for high-end jewelry platforms."
   },
   {
@@ -37,7 +37,7 @@ const experiences = [
 
 export const Experience: React.FC = () => {
   return (
-    <section id="experience" className="py-32 relative z-10">
+    <section id="experience" className="py-20 md:py-32 relative z-10">
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-start mb-20 gap-8">
           <div className="max-w-xl">
