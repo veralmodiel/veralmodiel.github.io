@@ -16,13 +16,13 @@ export default function Home() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false)
-    }, 1200)
+    }, 200)
     return () => clearTimeout(timer)
   }, [])
 
   return (
     <main className="relative min-h-screen bg-bg-base overflow-x-hidden">
-      <AnimatePresence>
+      {/* <AnimatePresence>
         {isLoading && (
           <motion.div
             key="loader"
@@ -48,7 +48,7 @@ export default function Home() {
             </div>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence> */}
 
       <ModernBackground />
       <Navigation />
@@ -68,7 +68,7 @@ export default function Home() {
               <a href="https://linkedin.com/in/veralmodiel" target="_blank" className="hover:text-text-base transition-colors">LinkedIn</a>
               <a href="https://drive.google.com/file/d/1MHM-fJmBDdN5H8YCWkCLjUu_o_79LyjR/view" target="_blank" className="hover:text-text-base transition-colors">Resume</a>
             </div>
-            <p className="font-mono">Built with Next.js 16 & Framer Motion</p>
+            <p className="font-mono">Built with AI, Next.js 16 & Framer Motion</p>
           </div>
         </footer>
       </div>
