@@ -8,8 +8,8 @@
   --text-base: #0f172a;
   --text-muted: #1e293b;
   --primary: #2563eb;
-  --secondary: #7c3aed;
-  --accent: #e11d48;
+  --secondary: #1e3a8a;
+  --accent: #06b6d4;
   --border-subtle: rgba(0, 0, 0, 0.15);
   
   --mouse-x: 50%;
@@ -24,8 +24,8 @@
     --text-base: #f8fafc;
     --text-muted: #94a3b8;
     --primary: #3b82f6;
-    --secondary: #8b5cf6;
-    --accent: #f43f5e;
+    --secondary: #5b7fd6;
+    --accent: #22d3ee;
     --border-subtle: rgba(255, 255, 255, 0.15);
   }
 }
@@ -38,8 +38,8 @@
   --text-base: #f8fafc;
   --text-muted: #94a3b8;
   --primary: #3b82f6;
-  --secondary: #8b5cf6;
-  --accent: #f43f5e;
+  --secondary: #5b7fd6;
+  --accent: #22d3ee;
   --border-subtle: rgba(255, 255, 255, 0.15);
 }
 
@@ -51,8 +51,8 @@
   --text-base: #0f172a;
   --text-muted: #1e293b;
   --primary: #2563eb;
-  --secondary: #7c3aed;
-  --accent: #e11d48;
+  --secondary: #1e3a8a;
+  --accent: #06b6d4;
   --border-subtle: rgba(0, 0, 0, 0.15);
 }
 
@@ -104,11 +104,24 @@
   .glass {
     @apply bg-bg-card backdrop-blur-xl border border-border-subtle shadow-2xl;
   }
-  
+
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-secondary to-accent;
+    @apply bg-clip-text text-transparent bg-linear-to-r from-primary via-secondary to-accent;
   }
-  
+
+  .grid-overlay {
+    background-image:
+      linear-gradient(to right, color-mix(in srgb, var(--text-base), transparent 95%) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in srgb, var(--text-base), transparent 95%) 1px, transparent 1px);
+    background-size: 64px 64px;
+    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+  }
+
+  .glow-btn {
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--primary), transparent 60%), 0 8px 40px -8px color-mix(in srgb, var(--primary), transparent 40%);
+  }
+
   .glow-border {
     position: relative;
   }

@@ -9,8 +9,8 @@ import { ThemeToggle } from "./theme-toggle"
 const navLinks = [
   { name: "About", href: "#about" },
   { name: "Skills", href: "#skills" },
-  { name: "Experience", href: "#experience" },
-  { name: "Education", href: "#education" },
+  { name: "Lab", href: "#lab" },
+  { name: "Contact", href: "#contact" },
 ]
 
 export const Navigation: React.FC = () => {
@@ -23,7 +23,7 @@ export const Navigation: React.FC = () => {
     setTimeout(() => setMounted(true), 0)
     const handleScroll = () => {
       setScrolled(window.scrollY > 50)
-      
+
       const sections = navLinks.map(link => link.href.substring(1))
       const scrollPosition = window.scrollY + 100
 
@@ -47,7 +47,7 @@ export const Navigation: React.FC = () => {
 
   return (
     <>
-      <nav 
+      <nav
         className={cn(
           "fixed top-6 left-1/2 -translate-x-1/2 z-[150] transition-all duration-500 w-[90%] max-w-2xl px-6 py-2 rounded-full border border-border-subtle",
           scrolled ? "bg-bg-base/80 backdrop-blur-xl shadow-2xl py-3 border-border-subtle" : "bg-transparent"

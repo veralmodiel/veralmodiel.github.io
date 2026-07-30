@@ -8,22 +8,27 @@ interface HeroProps {
   isLoaded?: boolean
 }
 
+const stats = [
+  { value: "09+", label: "Years shipping production code" },
+  { value: "04", label: "Ecosystems mastered end to end" },
+]
+
 export const Hero: React.FC<HeroProps> = ({ isLoaded = true }) => {
   return (
-    <section id="about" className="relative min-h-screen flex items-center justify-center pt-20 px-4">
-      <div className="max-w-4xl w-full text-center">
+    <section id="about" className="relative min-h-screen flex items-center justify-center pt-32 pb-20 px-4">
+      <div className="max-w-5xl w-full text-center">
         {/* Badge */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold uppercase tracking-widest mb-8"
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass glow-btn text-primary text-xs font-semibold uppercase tracking-widest mb-8"
         >
           <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
           </span>
-          Available for full-time employment
+          Open to full-time roles
         </motion.div>
 
         {/* Headline */}
@@ -31,9 +36,9 @@ export const Hero: React.FC<HeroProps> = ({ isLoaded = true }) => {
           initial={{ opacity: 0, y: 30 }}
           animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.7, delay: 0.1 }}
-          className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 leading-[1.1]"
+          className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-8 leading-[1.05]"
         >
-          Engineering <span className="text-gradient">Digital Experiences</span> with Precision.
+          I build the <span className="text-gradient">working parts</span> of the web.
         </motion.h1>
 
         {/* Subtext */}
@@ -43,7 +48,7 @@ export const Hero: React.FC<HeroProps> = ({ isLoaded = true }) => {
           transition={{ duration: 0.7, delay: 0.2 }}
           className="text-lg md:text-xl text-text-muted max-w-2xl mx-auto mb-12 leading-relaxed"
         >
-          Senior Full-Stack Web Developer with 9+ years of expertise. Specializing in WordPress ecosystems, Shopify, and Webflow, with a <span className="text-text-base font-bold">proactive recent focus on Next.js</span>
+          Full-stack developer who ships across WordPress, Shopify, Webflow and Next.js, and pairs that with an AI-assisted build process. Scroll down to see the skills at work instead of reading about them.
         </motion.p>
 
         {/* Actions */}
@@ -51,37 +56,39 @@ export const Hero: React.FC<HeroProps> = ({ isLoaded = true }) => {
           initial={{ opacity: 0, y: 30 }}
           animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.7, delay: 0.3 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+          className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-20"
         >
           <a
-            href="mailto:veralmodiel@gmail.com"
+            href="#lab"
             className="group relative px-8 py-4 bg-text-base text-bg-base font-bold rounded-full overflow-hidden transition-all hover:scale-105 active:scale-95"
           >
             <div className="relative z-10 flex items-center gap-2">
-              Let&apos;s Connect <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+              See it in action <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
             </div>
-            <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary opacity-0 group-hover:opacity-10 transition-opacity" />
+            <div className="absolute inset-0 bg-linear-to-r from-primary to-secondary opacity-0 group-hover:opacity-10 transition-opacity" />
           </a>
-          
+
           <a
-            href="https://github.com/veralmodiel"
-            target="_blank"
-            className="px-8 py-4 bg-bg-subtle text-text-base font-bold rounded-full border border-border-subtle hover:bg-bg-base transition-all active:scale-95 flex items-center gap-2"
+            href="#contact"
+            className="group px-8 py-4 bg-bg-subtle text-text-base font-bold rounded-full border border-border-subtle hover:bg-bg-base transition-all active:scale-95 flex items-center gap-2"
           >
-            GitHub
+            Let&apos;s talk <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
           </a>
         </motion.div>
 
-        {/* Social Links / Industry Badges */}
+        {/* Stat Row */}
         <motion.div
-           initial={{ opacity: 0 }}
-           animate={isLoaded ? { opacity: 1 } : { opacity: 0 }}
-           transition={{ duration: 1, delay: 0.8 }}
-           className="mt-16 flex flex-wrap gap-8 justify-center grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-[filter]"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.7, delay: 0.4 }}
+          className="grid grid-cols-2 gap-4 max-w-md mx-auto"
         >
-          <a href="https://linkedin.com/in/veralmodiel" target="_blank" className="text-xs uppercase tracking-widest font-bold hover:text-blue-400 transition-colors">LinkedIn</a>
-          <a href="https://github.com/veralmodiel" target="_blank" className="text-xs uppercase tracking-widest font-bold hover:text-white transition-colors">GitHub</a>
-          <a href="https://drive.google.com/file/d/1MHM-fJmBDdN5H8YCWkCLjUu_o_79LyjR/view" target="_blank" className="text-xs uppercase tracking-widest font-bold hover:text-rose-400 transition-colors">Full Resume</a>
+          {stats.map((stat) => (
+            <div key={stat.label} className="glass rounded-3xl px-6 py-6">
+              <div className="text-3xl md:text-4xl font-extrabold text-gradient mb-1 font-mono">{stat.value}</div>
+              <div className="text-xs uppercase tracking-widest text-text-muted">{stat.label}</div>
+            </div>
+          ))}
         </motion.div>
       </div>
     </section>
