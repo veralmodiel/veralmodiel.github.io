@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils"
 import { SectionMarker } from "@/components/ui/section-marker"
 import { useSectionReveal } from "@/hooks/use-section-reveal"
 import { TagFilter } from "@/components/skills/tag-filter"
+import { LogoCursor } from "@/components/skills/logo-cursor"
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger)
@@ -177,6 +178,7 @@ export const Skills: React.FC = () => {
   const industriesRef = useSectionReveal<HTMLDivElement>()
 
   const [activeTags, setActiveTags] = useState<string[]>([])
+  const [hovered, setHovered] = useState<Skill | null>(null)
 
   const allTags = useMemo(
     () => Array.from(new Set(skillGroups.flatMap((g) => g.skills.flatMap((s) => s.tags)))).sort(),
@@ -196,15 +198,15 @@ export const Skills: React.FC = () => {
   }, [activeTags])
 
   return (
-    <section id="skills" className="py-20 md:py-32 relative z-10">
-      <div className="max-w-6xl mx-auto px-4">
-        <div ref={headerRef} className="flex flex-col md:flex-row justify-between items-end mb-10 gap-6">
-          <div className="max-w-xl">
-            <SectionMarker marker="B" label="Toolkit" className="mb-4" />
-            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
+    <section id="skills" className="shell py-24 md:py-40 relative z-10">
+      <div>
+        <div ref={headerRef} className="grid grid-cols-12 gap-6 mb-16 md:mb-24">
+          <SectionMarker label="Toolkit" className="col-span-12 md:col-span-4" />
+          <div className="col-span-12 md:col-span-6 md:col-start-6">
+            <h2 className="text-[clamp(1.75rem,3.6vw,3.25rem)] leading-[1.05] mb-6">
               The Toolkit, in practice
             </h2>
-            <p className="text-text-muted text-lg">
+            <p className="text-text-muted max-w-md">
               The stack behind everything below. Keep scrolling to the Lab to see a few of these running live rather than just listed.
             </p>
           </div>
@@ -212,7 +214,7 @@ export const Skills: React.FC = () => {
 
         <TagFilter tags={allTags} active={activeTags} onToggle={toggleTag} />
 
-        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-12 gap-6 mt-10">
+        <div ref={gridRef} className="mt-12 border-b border-border-hairline">
           {skillGroups.map((group) => {
             const hasMatch = group.skills.some(skillMatches)
             if (!hasMatch) return null
@@ -220,32 +222,26 @@ export const Skills: React.FC = () => {
             return (
               <div
                 key={group.title}
-                className={cn(
-                  "reveal-card panel p-8 group transition-colors duration-500",
-                  group.size === "large" ? "md:col-span-6" : "md:col-span-6 lg:col-span-4"
-                )}
+                className="reveal-card grid grid-cols-12 gap-6 border-t border-border-hairline py-6"
               >
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="p-3 bg-bg-subtle/50 rounded-2xl group-hover:bg-bg-subtle transition-colors">
-                    <group.Icon size={24} className={group.iconColor} />
-                  </div>
-                  <h3 className="text-xl font-bold tracking-tight">{group.title}</h3>
-                </div>
+                <h3 className="col-span-12 md:col-span-4 text-sm leading-snug">{group.title}</h3>
 
-                <div className="flex flex-wrap gap-3">
+                <div className="col-span-12 md:col-span-7 md:col-start-6 flex flex-wrap gap-x-5 gap-y-2">
                   {group.skills.map((skill) => {
                     const matches = skillMatches(skill)
                     return (
                       <div
                         key={skill.name}
+                        onMouseEnter={() => setHovered(skill)}
+                        onMouseLeave={() => setHovered(null)}
                         className={cn(
-                          "px-4 py-2 bg-bg-subtle/50 rounded-xl text-sm font-medium text-text-muted border border-border-subtle hover:border-primary/20 hover:bg-bg-subtle transition-all cursor-default flex items-center gap-2",
+                          "text-text-muted hover:text-primary transition-colors cursor-default flex items-center gap-2",
                           !matches && "opacity-30"
                         )}
                       >
                         {skill.name}
                         {skill.badge && (
-                          <span className="text-[10px] bg-blue-500/20 text-blue-400 px-1.5 py-0.5 rounded-md font-bold tracking-tighter">
+                          <span className="label text-[10px] border border-border-hairline px-1">
                             {skill.badge}
                           </span>
                         )}
@@ -258,7 +254,7 @@ export const Skills: React.FC = () => {
           })}
         </div>
 
-        <div ref={industriesRef} className="mt-6 panel p-8">
+        <div ref={industriesRef} className="mt-16">
           <h3 className="text-xs uppercase tracking-widest text-text-muted mb-4">Shipped across</h3>
           <div className="flex flex-wrap gap-3">
             {industries.map((industry) => (
@@ -272,6 +268,7 @@ export const Skills: React.FC = () => {
           </div>
         </div>
       </div>
+      <LogoCursor name={hovered?.name ?? null} />
     </section>
   )
 }
