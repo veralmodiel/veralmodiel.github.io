@@ -14,11 +14,11 @@ export const site = {
    * Cloudflare dashboard → Web Analytics → Add a site → copy the token from the snippet.
    * Leave empty to disable analytics.
    */
-  cfAnalyticsToken: "",
+  cfAnalyticsToken: "eff72464ae984bea8a221ad9a70157ec",
   /**
    * Google Search Console verification code (public, safe to commit).
    * Search Console → Add property → URL prefix → HTML tag → copy only the content="…" value.
    * Leave empty until you have it.
    */
-  googleVerification: "",
+  googleVerification: "6k1EdQd-AUOwMzDJlHEiBeFAD_K1RwXPiMQqiYbUZ7E",
 }

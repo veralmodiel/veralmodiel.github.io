@@ -87,6 +87,7 @@ export default function RootLayout({
         </ThemeProvider>
         {site.cfAnalyticsToken && (
           <script
+            type="module"
             defer
             src="https://static.cloudflareinsights.com/beacon.min.js"
             data-cf-beacon={JSON.stringify({ token: site.cfAnalyticsToken })}
