@@ -4,19 +4,13 @@ import React, { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { sections } from "@/lib/sections"
 import { ThemeToggle } from "./theme-toggle"
-
-const navLinks = [
-  { name: "About", href: "#about" },
-  { name: "Skills", href: "#skills" },
-  { name: "Lab", href: "#lab" },
-  { name: "Contact", href: "#contact" },
-]
 
 export const Navigation: React.FC = () => {
   const [mounted, setMounted] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [activeSection, setActiveSection] = useState("about")
+  const [activeSection, setActiveSection] = useState(sections[0].id)
   const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
@@ -24,16 +18,15 @@ export const Navigation: React.FC = () => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50)
 
-      const sections = navLinks.map(link => link.href.substring(1))
       const scrollPosition = window.scrollY + 100
 
       for (const section of sections) {
-        const element = document.getElementById(section)
+        const element = document.getElementById(section.id)
         if (element) {
           const offsetTop = element.offsetTop
           const offsetHeight = element.offsetHeight
           if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setActiveSection(section)
+            setActiveSection(section.id)
           }
         }
       }
@@ -60,16 +53,17 @@ export const Navigation: React.FC = () => {
 
           {/* Desktop Nav */}
           <div className="hidden md:flex gap-8 items-center">
-            {navLinks.map((link) => (
+            {sections.map((section) => (
               <a
-                key={link.name}
-                href={link.href}
+                key={section.id}
+                href={`#${section.id}`}
                 className={cn(
-                  "text-xs font-medium uppercase tracking-widest transition-all hover:text-primary",
-                  activeSection === link.href.substring(1) ? "text-primary" : "text-text-muted"
+                  "font-mono text-xs uppercase tracking-widest transition-all hover:text-primary flex items-center gap-1.5",
+                  activeSection === section.id ? "text-primary" : "text-text-muted"
                 )}
               >
-                {link.name}
+                <span className="opacity-60">{"{"}{section.marker}{"}"}</span>
+                {section.label}
               </a>
             ))}
             <div className="w-[1px] h-4 bg-border-subtle mx-2" />
@@ -98,17 +92,18 @@ export const Navigation: React.FC = () => {
             exit={{ opacity: 0, y: -20 }}
             className="fixed inset-0 z-[140] bg-bg-base/98 backdrop-blur-2xl flex flex-col items-center justify-center gap-10 md:hidden"
           >
-            {navLinks.map((link) => (
+            {sections.map((section) => (
               <a
-                key={link.name}
-                href={link.href}
+                key={section.id}
+                href={`#${section.id}`}
                 onClick={() => setIsMenuOpen(false)}
                 className={cn(
-                  "text-2xl font-bold tracking-tight transition-all",
-                  activeSection === link.href.substring(1) ? "text-primary" : "text-text-muted"
+                  "text-2xl font-bold tracking-tight transition-all flex items-center gap-3",
+                  activeSection === section.id ? "text-primary" : "text-text-muted"
                 )}
               >
-                {link.name}
+                <span className="font-mono text-sm opacity-60">{"{"}{section.marker}{"}"}</span>
+                {section.label}
               </a>
             ))}
           </motion.div>

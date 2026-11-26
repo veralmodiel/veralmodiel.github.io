@@ -4,6 +4,7 @@ import React, { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Mail, MapPin, ArrowUpRight, Check, Loader2 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { SectionMarker } from "@/components/ui/section-marker"
 
 const WEB3FORMS_ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ?? ""
 
@@ -61,6 +62,7 @@ export const Contact: React.FC = () => {
       <div className="max-w-6xl mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div>
+            <SectionMarker marker="D" label="Contact" className="mb-6" />
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -68,7 +70,7 @@ export const Contact: React.FC = () => {
               viewport={{ once: true, amount: 0.3, margin: "-100px" }}
               className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8"
             >
-              Ready to <br /><span className="text-gradient">Collaborate</span>?
+              Ready to <br />Collaborate?
             </motion.h2>
             <p className="text-text-muted text-lg mb-12 max-w-md leading-relaxed">
               I am currently open to high-impact projects and senior roles within forward-thinking organizations.
@@ -96,7 +98,7 @@ export const Contact: React.FC = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.2 }}
               viewport={{ once: true, amount: 0.3, margin: "-100px" }}
-              className="glass p-10 md:p-12 rounded-[60px] border border-border-subtle transition-colors hover:border-primary/30"
+              className="panel p-10 md:p-12 transition-colors hover:border-primary/30"
             >
               <AnimatePresence mode="wait">
                 {status === "success" ? (
@@ -163,7 +165,7 @@ export const Contact: React.FC = () => {
                     <button
                       type="submit"
                       disabled={!canSubmit || status === "loading"}
-                      className="w-full py-6 bg-text-base text-bg-base font-bold rounded-3xl flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100"
+                      className="w-full py-6 bg-text-base text-bg-base font-bold rounded-sm flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100"
                     >
                       {status === "loading" ? (
                         <>

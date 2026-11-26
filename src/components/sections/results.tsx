@@ -22,7 +22,7 @@ export const Results: React.FC = () => {
           className="grid grid-cols-2 lg:grid-cols-4 gap-4"
         >
           {results.map((stat) => (
-            <div key={stat.label} className="glass glow-border rounded-3xl px-6 py-8 text-center">
+            <div key={stat.label} className="panel px-6 py-8 text-center">
               <div className="text-3xl md:text-4xl font-extrabold text-gradient mb-2 font-mono">{stat.value}</div>
               <div className="text-xs uppercase tracking-widest text-text-muted leading-relaxed">{stat.label}</div>
             </div>

@@ -4,6 +4,7 @@ import React from "react"
 import { motion } from "framer-motion"
 import { Code, Server, Wand2, Globe, BrainCircuit, ShoppingCart, Users, MapPin, Zap, Gauge, Layers, LucideIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { SectionMarker } from "@/components/ui/section-marker"
 
 interface Skill {
   name: string
@@ -118,12 +119,13 @@ export const Skills: React.FC = () => {
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
           <div className="max-w-xl">
+            <SectionMarker marker="B" label="Toolkit" className="mb-4" />
             <motion.h2
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4"
             >
-              The <span className="text-gradient">Toolkit</span>, in practice
+              The Toolkit, in practice
             </motion.h2>
             <p className="text-text-muted text-lg">
               The stack behind everything below. Keep scrolling to the Lab to see a few of these running live rather than just listed.
@@ -140,7 +142,7 @@ export const Skills: React.FC = () => {
               transition={{ delay: index * 0.1, duration: 0.8 }}
               viewport={{ once: true, amount: 0.3, margin: "-100px" }}
               className={cn(
-                "glass glow-border p-8 rounded-[32px] group transition-colors duration-500",
+                "panel p-8 group transition-colors duration-500",
                 group.size === "large" ? "md:col-span-6" : "md:col-span-6 lg:col-span-4"
               )}
             >
@@ -181,7 +183,7 @@ export const Skills: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true, amount: 0.3, margin: "-100px" }}
-          className="mt-6 glass p-8 rounded-[32px]"
+          className="mt-6 panel p-8"
         >
           <h3 className="text-xs uppercase tracking-widest text-text-muted mb-4">Shipped across</h3>
           <div className="flex flex-wrap gap-3">

@@ -31,7 +31,7 @@ export default function RootLayout({
         <div className="fixed inset-0 noise z-50 pointer-events-none" />
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="dark"
           enableSystem
         >
           <MouseTracker />

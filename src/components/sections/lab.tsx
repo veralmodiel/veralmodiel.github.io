@@ -3,18 +3,20 @@
 import React from "react"
 import { motion } from "framer-motion"
 import { labItems } from "@/lib/lab-items"
+import { SectionMarker } from "@/components/ui/section-marker"
 
 export const Lab: React.FC = () => {
   return (
     <section id="lab" className="py-20 md:py-32 relative z-10">
       <div className="max-w-6xl mx-auto px-4">
         <div className="max-w-xl mb-16">
+          <SectionMarker marker="C" label="Lab" className="mb-4" />
           <motion.h2
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4"
           >
-            The <span className="text-gradient">Lab</span>
+            The Lab
           </motion.h2>
           <p className="text-text-muted text-lg mb-4">
             Most of my client work sits behind agency NDAs, so instead of screenshots, here are a few small builds you can actually touch.

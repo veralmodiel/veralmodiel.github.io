@@ -1,77 +1,53 @@
 @import "tailwindcss";
 
 :root {
-  color-scheme: light dark;
-  --bg-base: #f8fafc;
-  --bg-subtle: #f1f5f9;
-  --bg-card: rgba(255, 255, 255, 0.7);
-  --text-base: #0f172a;
-  --text-muted: #1e293b;
-  --primary: #2563eb;
-  --secondary: #1e3a8a;
-  --accent: #06b6d4;
-  --border-subtle: rgba(0, 0, 0, 0.15);
-  
+  color-scheme: dark;
+  --bg-base: #0a0a0a;
+  --bg-subtle: #141414;
+  --bg-card: rgba(255, 255, 255, 0.04);
+  --text-base: #f2f2f0;
+  --text-muted: #8f8f8f;
+  --primary: #ff5a1f;
+  --secondary: #ff9152;
+  --accent: #ffd166;
+  --border-subtle: rgba(255, 255, 255, 0.12);
+  --border-hairline: rgba(255, 255, 255, 0.16);
+
   --mouse-x: 50%;
   --mouse-y: 50%;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg-base: #020617;
-    --bg-subtle: #0f172a;
-    --bg-card: rgba(15, 23, 42, 0.5);
-    --text-base: #f8fafc;
-    --text-muted: #94a3b8;
-    --primary: #3b82f6;
-    --secondary: #5b7fd6;
-    --accent: #22d3ee;
-    --border-subtle: rgba(255, 255, 255, 0.15);
-  }
-}
-
-.dark {
-  color-scheme: dark;
-  --bg-base: #020617;
-  --bg-subtle: #0f172a;
-  --bg-card: rgba(15, 23, 42, 0.5);
-  --text-base: #f8fafc;
-  --text-muted: #94a3b8;
-  --primary: #3b82f6;
-  --secondary: #5b7fd6;
-  --accent: #22d3ee;
-  --border-subtle: rgba(255, 255, 255, 0.15);
-}
-
 .light {
   color-scheme: light;
-  --bg-base: #f8fafc;
-  --bg-subtle: #f1f5f9;
-  --bg-card: rgba(255, 255, 255, 0.7);
-  --text-base: #0f172a;
-  --text-muted: #1e293b;
-  --primary: #2563eb;
-  --secondary: #1e3a8a;
-  --accent: #06b6d4;
-  --border-subtle: rgba(0, 0, 0, 0.15);
+  --bg-base: #f7f6f3;
+  --bg-subtle: #efeee9;
+  --bg-card: rgba(10, 10, 10, 0.03);
+  --text-base: #0a0a0a;
+  --text-muted: #5a5a5a;
+  --primary: #d14a1f;
+  --secondary: #b35a1f;
+  --accent: #a8780f;
+  --border-subtle: rgba(0, 0, 0, 0.12);
+  --border-hairline: rgba(0, 0, 0, 0.16);
 }
 
 @theme {
   --font-sans: var(--font-jakarta);
   --font-mono: var(--font-share-tech-mono);
-  
+
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
   --color-accent: var(--accent);
-  
+
   --color-bg-base: var(--bg-base);
   --color-bg-subtle: var(--bg-subtle);
   --color-bg-card: var(--bg-card);
-  
+
   --color-text-base: var(--text-base);
   --color-text-muted: var(--text-muted);
-  
+
   --color-border-subtle: var(--border-subtle);
+  --color-border-hairline: var(--border-hairline);
   --color-border-glow: rgba(59, 130, 246, 0.5);
 }
 
@@ -81,7 +57,6 @@
   }
   
   html, body {
-    scroll-behavior: smooth;
     overflow-x: clip;
     @apply bg-bg-base text-text-base antialiased;
   }
@@ -103,6 +78,10 @@
 @layer utilities {
   .glass {
     @apply bg-bg-card backdrop-blur-xl border border-border-subtle shadow-2xl;
+  }
+
+  .panel {
+    @apply bg-bg-subtle border border-border-hairline rounded-sm;
   }
 
   .text-gradient {
@@ -151,7 +130,7 @@
   }
   
   .noise {
-    /* background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"); */
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
     opacity: 0.05;
     pointer-events: none;
   }

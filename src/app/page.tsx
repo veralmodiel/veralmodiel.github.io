@@ -1,7 +1,5 @@
 "use client"
 
-import React, { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
 import { Navigation } from "@/components/navigation"
 import { ModernBackground } from "@/components/modern-background"
 import { Hero } from "@/components/sections/hero"
@@ -11,50 +9,13 @@ import { Lab } from "@/components/sections/lab"
 import { Contact } from "@/components/sections/contact"
 
 export default function Home() {
-  const [isLoading, setIsLoading] = useState(true)
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false)
-    }, 200)
-    return () => clearTimeout(timer)
-  }, [])
-
   return (
     <main className="relative min-h-screen bg-bg-base overflow-x-hidden">
-      {/* <AnimatePresence>
-        {isLoading && (
-          <motion.div
-            key="loader"
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[200] bg-bg-base flex flex-col items-center justify-center p-4"
-          >
-            <div className="relative">
-              <motion.div 
-                initial={{ width: 0 }}
-                animate={{ width: 240 }}
-                transition={{ duration: 0.8, ease: "circOut" }}
-                className="h-1 bg-gradient-to-r from-blue-600 via-cyan-500 to-amber-500 rounded-full mb-6"
-              />
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.4 }}
-                className="text-xs font-bold tracking-[0.6em] text-center text-text-muted uppercase flex items-center justify-center gap-3"
-              >
-                Initializing <span className="w-1 h-1 bg-primary rounded-full animate-pulse" /> Platform
-              </motion.div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence> */}
-
       <ModernBackground />
       <Navigation />
-      
+
       <div className="relative z-10">
-        <Hero isLoaded={!isLoading} />
+        <Hero />
         <Results />
         <Skills />
         <Lab />
