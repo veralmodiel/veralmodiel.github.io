@@ -4,16 +4,23 @@ import React from "react"
 import { motion } from "framer-motion"
 import { ArrowRight } from "lucide-react"
 import { SectionMarker } from "@/components/ui/section-marker"
+import { FigCaption } from "@/components/ui/fig-caption"
+import { HeroCanvas } from "@/components/hero/hero-canvas"
+import { WordStack } from "@/components/hero/word-stack"
 
 const stats = [
   { value: "09+", label: "Years shipping production code" },
   { value: "04", label: "Ecosystems mastered end to end" },
 ]
 
+const headlineWords = ["working parts", "fast storefronts", "clean backends", "shipped features"]
+
 export const Hero: React.FC = () => {
   return (
-    <section id="about" className="relative min-h-screen flex items-center justify-center pt-32 pb-20 px-4">
-      <div className="max-w-5xl w-full text-center">
+    <section id="about" className="relative min-h-screen flex items-center justify-center pt-32 pb-20 px-4 overflow-hidden">
+      <HeroCanvas />
+
+      <div className="relative z-10 max-w-5xl w-full text-center">
         <SectionMarker marker="A" label="Intro" className="justify-center mb-8" />
 
         {/* Badge */}
@@ -37,7 +44,7 @@ export const Hero: React.FC = () => {
           transition={{ duration: 0.7, delay: 0.1 }}
           className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-8 leading-[1.05]"
         >
-          I build the working parts of the web.
+          I build the <WordStack words={headlineWords} className="text-primary align-top" /> of the web.
         </motion.h1>
 
         {/* Subtext */}
@@ -90,6 +97,10 @@ export const Hero: React.FC = () => {
           ))}
         </motion.div>
       </div>
+
+      <FigCaption index={1} className="absolute bottom-6 left-6 z-10">
+        generated field
+      </FigCaption>
     </section>
   )
 }

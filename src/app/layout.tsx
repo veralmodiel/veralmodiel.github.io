@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Share_Tech_Mono } from "next/font/google";
+import { MotionConfig } from "framer-motion";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { MouseTracker } from "@/components/mouse-tracker";
@@ -34,8 +35,10 @@ export default function RootLayout({
           defaultTheme="dark"
           enableSystem
         >
-          <MouseTracker />
-          {children}
+          <MotionConfig reducedMotion="user">
+            <MouseTracker />
+            {children}
+          </MotionConfig>
         </ThemeProvider>
       </body>
     </html>

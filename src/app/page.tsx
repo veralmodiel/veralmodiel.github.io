@@ -1,7 +1,6 @@
 "use client"
 
 import { Navigation } from "@/components/navigation"
-import { ModernBackground } from "@/components/modern-background"
 import { Hero } from "@/components/sections/hero"
 import { Results } from "@/components/sections/results"
 import { Skills } from "@/components/sections/skills"
@@ -11,7 +10,6 @@ import { Contact } from "@/components/sections/contact"
 export default function Home() {
   return (
     <main className="relative min-h-screen bg-bg-base overflow-x-hidden">
-      <ModernBackground />
       <Navigation />
 
       <div className="relative z-10">
