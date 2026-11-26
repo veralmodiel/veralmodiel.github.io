@@ -3,38 +3,58 @@
 import React, { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X } from "lucide-react"
+import gsap from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
+import { useLenis } from "lenis/react"
 import { cn } from "@/lib/utils"
 import { sections } from "@/lib/sections"
+import { prefersReducedMotion } from "@/lib/motion"
 import { ThemeToggle } from "./theme-toggle"
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger)
+}
 
 export const Navigation: React.FC = () => {
   const [mounted, setMounted] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState(sections[0].id)
   const [scrolled, setScrolled] = useState(false)
+  const lenis = useLenis()
 
   useEffect(() => {
     setTimeout(() => setMounted(true), 0)
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50)
-
-      const scrollPosition = window.scrollY + 100
-
-      for (const section of sections) {
-        const element = document.getElementById(section.id)
-        if (element) {
-          const offsetTop = element.offsetTop
-          const offsetHeight = element.offsetHeight
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setActiveSection(section.id)
-          }
-        }
-      }
-    }
-
+    const handleScroll = () => setScrolled(window.scrollY > 50)
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
+
+  useEffect(() => {
+    const triggers = sections.map((section) =>
+      ScrollTrigger.create({
+        trigger: `#${section.id}`,
+        start: "top center",
+        end: "bottom center",
+        onToggle: (self) => {
+          if (self.isActive) setActiveSection(section.id)
+        },
+      })
+    )
+    return () => triggers.forEach((trigger) => trigger.kill())
+  }, [])
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault()
+    const target = document.getElementById(id)
+    if (!target) return
+
+    if (lenis) {
+      lenis.scrollTo(target, { offset: -16 })
+    } else {
+      target.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth" })
+    }
+    setIsMenuOpen(false)
+  }
 
   if (!mounted) return null
 
@@ -57,6 +77,7 @@ export const Navigation: React.FC = () => {
               <a
                 key={section.id}
                 href={`#${section.id}`}
+                onClick={(e) => handleNavClick(e, section.id)}
                 className={cn(
                   "font-mono text-xs uppercase tracking-widest transition-all hover:text-primary flex items-center gap-1.5",
                   activeSection === section.id ? "text-primary" : "text-text-muted"
@@ -96,7 +117,7 @@ export const Navigation: React.FC = () => {
               <a
                 key={section.id}
                 href={`#${section.id}`}
-                onClick={() => setIsMenuOpen(false)}
+                onClick={(e) => handleNavClick(e, section.id)}
                 className={cn(
                   "text-2xl font-bold tracking-tight transition-all flex items-center gap-3",
                   activeSection === section.id ? "text-primary" : "text-text-muted"

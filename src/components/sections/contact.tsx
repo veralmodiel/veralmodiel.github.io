@@ -1,10 +1,19 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useRef, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
+import gsap from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
+import { SplitText } from "gsap/SplitText"
+import { useGSAP } from "@gsap/react"
 import { Mail, MapPin, ArrowUpRight, Check, Loader2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { SectionMarker } from "@/components/ui/section-marker"
+import { useSectionReveal } from "@/hooks/use-section-reveal"
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger, SplitText, useGSAP)
+}
 
 const WEB3FORMS_ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ?? ""
 
@@ -16,6 +25,31 @@ export const Contact: React.FC = () => {
   const [message, setMessage] = useState("")
   const [honeypot, setHoneypot] = useState("")
   const [status, setStatus] = useState<Status>("idle")
+
+  const headingRef = useRef<HTMLHeadingElement>(null)
+  const formPanelRef = useSectionReveal<HTMLDivElement>()
+
+  useGSAP(
+    () => {
+      if (!headingRef.current) return
+      const mm = gsap.matchMedia()
+
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        const split = SplitText.create(headingRef.current, { type: "lines", mask: "lines" })
+        gsap.from(split.lines, {
+          yPercent: 110,
+          opacity: 0,
+          duration: 0.8,
+          ease: "power3.out",
+          stagger: 0.12,
+          scrollTrigger: { trigger: headingRef.current, start: "top 85%" },
+        })
+      })
+
+      return () => mm.revert()
+    },
+    { scope: headingRef }
+  )
 
   const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
   const canSubmit = name.trim().length > 1 && emailValid && message.trim().length > 4
@@ -63,15 +97,9 @@ export const Contact: React.FC = () => {
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div>
             <SectionMarker marker="D" label="Contact" className="mb-6" />
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true, amount: 0.3, margin: "-100px" }}
-              className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8"
-            >
+            <h2 ref={headingRef} className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8">
               Ready to <br />Collaborate?
-            </motion.h2>
+            </h2>
             <p className="text-text-muted text-lg mb-12 max-w-md leading-relaxed">
               I am currently open to high-impact projects and senior roles within forward-thinking organizations.
             </p>
@@ -93,13 +121,7 @@ export const Contact: React.FC = () => {
           </div>
 
           <div className="relative">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              viewport={{ once: true, amount: 0.3, margin: "-100px" }}
-              className="panel p-10 md:p-12 transition-colors hover:border-primary/30"
-            >
+            <div ref={formPanelRef} className="panel p-10 md:p-12 transition-colors hover:border-primary/30">
               <AnimatePresence mode="wait">
                 {status === "success" ? (
                   <motion.div
@@ -190,7 +212,7 @@ export const Contact: React.FC = () => {
                   </motion.form>
                 )}
               </AnimatePresence>
-            </motion.div>
+            </div>
 
             {/* Visual Flare */}
             <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-secondary/10 blur-[80px] pointer-events-none" />

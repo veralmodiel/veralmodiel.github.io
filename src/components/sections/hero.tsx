@@ -1,12 +1,19 @@
 "use client"
 
-import React from "react"
+import React, { useRef } from "react"
 import { motion } from "framer-motion"
+import gsap from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
+import { useGSAP } from "@gsap/react"
 import { ArrowRight } from "lucide-react"
 import { SectionMarker } from "@/components/ui/section-marker"
 import { FigCaption } from "@/components/ui/fig-caption"
 import { HeroCanvas } from "@/components/hero/hero-canvas"
 import { WordStack } from "@/components/hero/word-stack"
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger, useGSAP)
+}
 
 const stats = [
   { value: "09+", label: "Years shipping production code" },
@@ -16,8 +23,38 @@ const stats = [
 const headlineWords = ["working parts", "fast storefronts", "clean backends", "shipped features"]
 
 export const Hero: React.FC = () => {
+  const sectionRef = useRef<HTMLElement>(null)
+
+  useGSAP(
+    () => {
+      if (!sectionRef.current) return
+      const mm = gsap.matchMedia()
+
+      // Pinned intro: holds the hero in place for a short extra scroll before
+      // releasing into the rest of the page. Desktop + no-reduced-motion only —
+      // pinning on mobile fights the viewport and is explicitly out of scope there.
+      mm.add("(prefers-reduced-motion: no-preference) and (min-width: 768px)", () => {
+        const trigger = ScrollTrigger.create({
+          trigger: sectionRef.current,
+          start: "top top",
+          end: () => "+=" + window.innerHeight * 0.4,
+          pin: true,
+          pinSpacing: true,
+        })
+        return () => trigger.kill()
+      })
+
+      return () => mm.revert()
+    },
+    { scope: sectionRef }
+  )
+
   return (
-    <section id="about" className="relative min-h-screen flex items-center justify-center pt-32 pb-20 px-4 overflow-hidden">
+    <section
+      ref={sectionRef}
+      id="about"
+      className="relative min-h-screen flex items-center justify-center pt-32 pb-20 px-4 overflow-hidden"
+    >
       <HeroCanvas />
 
       <div className="relative z-10 max-w-5xl w-full text-center">

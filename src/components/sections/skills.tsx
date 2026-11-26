@@ -1,10 +1,10 @@
 "use client"
 
 import React from "react"
-import { motion } from "framer-motion"
 import { Code, Server, Wand2, Globe, BrainCircuit, ShoppingCart, Users, MapPin, Zap, Gauge, Layers, LucideIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { SectionMarker } from "@/components/ui/section-marker"
+import { useSectionReveal } from "@/hooks/use-section-reveal"
 
 interface Skill {
   name: string
@@ -114,35 +114,31 @@ const industries = [
 ]
 
 export const Skills: React.FC = () => {
+  const headerRef = useSectionReveal<HTMLDivElement>()
+  const gridRef = useSectionReveal<HTMLDivElement>({ selector: ".reveal-card", stagger: 0.08 })
+  const industriesRef = useSectionReveal<HTMLDivElement>()
+
   return (
     <section id="skills" className="py-20 md:py-32 relative z-10">
       <div className="max-w-6xl mx-auto px-4">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+        <div ref={headerRef} className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
           <div className="max-w-xl">
             <SectionMarker marker="B" label="Toolkit" className="mb-4" />
-            <motion.h2
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4"
-            >
+            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
               The Toolkit, in practice
-            </motion.h2>
+            </h2>
             <p className="text-text-muted text-lg">
               The stack behind everything below. Keep scrolling to the Lab to see a few of these running live rather than just listed.
             </p>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-          {skillGroups.map((group, index) => (
-            <motion.div
+        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-12 gap-6">
+          {skillGroups.map((group) => (
+            <div
               key={group.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1, duration: 0.8 }}
-              viewport={{ once: true, amount: 0.3, margin: "-100px" }}
               className={cn(
-                "panel p-8 group transition-colors duration-500",
+                "reveal-card panel p-8 group transition-colors duration-500",
                 group.size === "large" ? "md:col-span-6" : "md:col-span-6 lg:col-span-4"
               )}
             >
@@ -174,17 +170,11 @@ export const Skills: React.FC = () => {
                   )
                 })}
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true, amount: 0.3, margin: "-100px" }}
-          className="mt-6 panel p-8"
-        >
+        <div ref={industriesRef} className="mt-6 panel p-8">
           <h3 className="text-xs uppercase tracking-widest text-text-muted mb-4">Shipped across</h3>
           <div className="flex flex-wrap gap-3">
             {industries.map((industry) => (
@@ -196,7 +186,7 @@ export const Skills: React.FC = () => {
               </span>
             ))}
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   )
