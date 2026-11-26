@@ -84,7 +84,7 @@ export const LiveRepos: React.FC = () => {
             href={`https://github.com/${GITHUB_USERNAME}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-primary font-bold hover:underline"
+            className="text-primary hover:underline"
           >
             View repos directly on GitHub
           </a>
@@ -112,7 +112,7 @@ export const LiveRepos: React.FC = () => {
               className="block p-4 rounded-2xl bg-bg-subtle/50 border border-border-subtle hover:border-primary/30 hover:bg-bg-subtle transition-all group"
             >
               <div className="flex items-start justify-between gap-4 mb-1">
-                <span className="font-bold text-sm group-hover:text-primary transition-colors truncate">
+                <span className="text-sm text-text-base group-hover:text-primary transition-colors truncate">
                   {repo.name}
                 </span>
                 <span className="text-[10px] text-text-muted whitespace-nowrap">{timeAgo(repo.updated_at)}</span>

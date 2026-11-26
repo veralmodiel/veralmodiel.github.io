@@ -52,11 +52,11 @@ export const DeployConsole: React.FC = () => {
   }
 
   return (
-    <div className="rounded-2xl bg-bg-subtle/60 border border-border-subtle overflow-hidden flex-1">
+    <div className="bg-bg-subtle/60 border border-border-hairline overflow-hidden flex-1">
       <div className="flex items-center gap-1.5 px-4 py-3 border-b border-border-subtle">
-        <div className="w-2.5 h-2.5 rounded-full bg-red-400" />
-        <div className="w-2.5 h-2.5 rounded-full bg-yellow-400" />
-        <div className="w-2.5 h-2.5 rounded-full bg-green-400" />
+        <div className="w-2 h-2 bg-text-muted/50" />
+        <div className="w-2 h-2 bg-text-muted/30" />
+        <div className="w-2 h-2 bg-text-muted/20" />
         <span className="ml-3 text-[11px] text-text-muted font-mono">ver@production — deploy</span>
         <button
           onClick={replay}
@@ -70,7 +70,12 @@ export const DeployConsole: React.FC = () => {
         {lines.map((line, i) => {
           const isCmd = commands[i]?.kind === "cmd"
           return (
-            <p key={i} className={isCmd ? "text-text-base mb-1" : "text-emerald-400 mb-1"}>
+            <p
+              key={i}
+              className={
+                isCmd ? "text-text-base mb-1" : line.startsWith("✓") ? "text-primary mb-1" : "text-text-muted mb-1"
+              }
+            >
               {isCmd && <span className="text-primary">$ </span>}
               {line}
               {i === lineIndex && (

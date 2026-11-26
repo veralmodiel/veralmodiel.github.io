@@ -214,7 +214,7 @@ export const Skills: React.FC = () => {
 
         <TagFilter tags={allTags} active={activeTags} onToggle={toggleTag} />
 
-        <div ref={gridRef} className="mt-12 border-b border-border-hairline">
+        <div ref={gridRef} data-cursor="hide" className="mt-12 border-b border-border-hairline">
           {skillGroups.map((group) => {
             const hasMatch = group.skills.some(skillMatches)
             if (!hasMatch) return null

@@ -34,14 +34,14 @@ export const CartCalculator: React.FC = () => {
   return (
     <>
       <div className="flex justify-end mb-4">
-        <span className="text-xs font-bold text-text-muted">{itemCount} item{itemCount === 1 ? "" : "s"}</span>
+        <span className="label">{itemCount} item{itemCount === 1 ? "" : "s"}</span>
       </div>
 
       <div className="space-y-3 flex-1">
         {products.map((product) => (
           <div key={product.id} className="flex items-center justify-between p-4 rounded-2xl bg-bg-subtle/50 border border-border-subtle">
             <div>
-              <div className="text-sm font-bold">{product.name}</div>
+              <div className="text-sm text-text-base">{product.name}</div>
               <div className="text-xs text-text-muted">${product.price.toFixed(2)}</div>
             </div>
             <div className="flex items-center gap-3">

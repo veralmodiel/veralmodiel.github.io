@@ -52,7 +52,7 @@ export const Contact: React.FC = () => {
   )
 
   const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-  const canSubmit = name.trim().length > 1 && emailValid && message.trim().length > 4
+  const canSubmit = name.trim().length > 1 && emailValid
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -74,7 +74,7 @@ export const Contact: React.FC = () => {
           subject: `Portfolio enquiry from ${name}`,
           name,
           email,
-          message,
+          message: message.trim() || "(No message — just wants to connect.)",
         }),
       })
       const data = await res.json()
@@ -106,22 +106,18 @@ export const Contact: React.FC = () => {
 
             <div className="space-y-6">
               <a href="mailto:veralmodiel@gmail.com" className="flex items-center gap-4 text-text-muted hover:text-primary transition-colors group">
-                <div className="p-3 bg-bg-subtle/50 rounded-2xl group-hover:bg-primary/10 transition-colors">
-                  <Mail size={24} className="text-primary" />
-                </div>
-                <span className="text-xl font-bold">veralmodiel@gmail.com</span>
+                <Mail size={18} strokeWidth={1.5} className="text-primary shrink-0" />
+                <span className="text-base text-text-base group-hover:text-primary transition-colors">veralmodiel@gmail.com</span>
               </a>
               <div className="flex items-center gap-4 text-text-muted">
-                <div className="p-3 bg-bg-subtle/50 rounded-2xl">
-                  <MapPin size={24} className="text-secondary" />
-                </div>
-                <span className="text-xl font-bold">Bacolod City, Philippines</span>
+                <MapPin size={18} strokeWidth={1.5} className="text-primary shrink-0" />
+                <span className="text-base">Bacolod City, Philippines</span>
               </div>
             </div>
           </div>
 
           <div className="relative">
-            <div ref={formPanelRef} className="md:border md:border-border-hairline md:p-12 transition-colors md:hover:border-primary/30">
+            <div ref={formPanelRef} className="w-full max-w-xl lg:ml-auto md:border md:border-border-hairline md:p-12 transition-colors md:hover:border-primary/30">
               <AnimatePresence mode="wait">
                 {status === "success" ? (
                   <motion.div
@@ -131,7 +127,7 @@ export const Contact: React.FC = () => {
                     exit={{ opacity: 0 }}
                     className="flex flex-col items-center text-center py-10"
                   >
-                    <div className="w-16 h-16 rounded-full bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-6">
+                    <div className="w-14 h-14 border border-primary/40 bg-primary/10 flex items-center justify-center text-primary mb-6">
                       <Check size={28} />
                     </div>
                     <h3 className="text-2xl font-bold mb-2">Message sent</h3>
@@ -201,12 +197,12 @@ export const Contact: React.FC = () => {
                     </button>
 
                     {status === "error" && (
-                      <p className="mt-4 text-xs font-bold text-accent">
+                      <p className="mt-4 label text-primary">
                         Couldn&apos;t send that. Email me directly at veralmodiel@gmail.com instead.
                       </p>
                     )}
 
-                    <p className={cn("mt-8 text-xs font-bold text-text-muted uppercase tracking-widest", status === "error" && "hidden")}>
+                    <p className={cn("mt-8 label", status === "error" && "hidden")}>
                       Will reply as soon as possible.
                     </p>
                   </motion.form>
@@ -215,7 +211,6 @@ export const Contact: React.FC = () => {
             </div>
 
             {/* Visual Flare */}
-            <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-secondary/10 blur-[80px] pointer-events-none" />
           </div>
         </div>
       </div>

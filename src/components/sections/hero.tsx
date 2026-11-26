@@ -24,7 +24,7 @@ function WordIndex() {
   }, [])
 
   return (
-    <ul className="flex flex-col gap-1" aria-label="What I build">
+    <ul className="flex flex-row flex-wrap gap-x-4 gap-y-1 md:flex-col md:gap-1" aria-label="What I build">
       {words.map((word, i) => (
         <li
           key={word}
@@ -42,39 +42,39 @@ function WordIndex() {
 
 export const Hero: React.FC = () => {
   return (
-    <section id="about" className="shell relative min-h-screen flex flex-col justify-between pt-36 md:pt-28 pb-10">
+    <section id="about" className="shell relative min-h-screen flex flex-col justify-between pt-[clamp(7rem,17svh,9rem)] md:pt-[clamp(5rem,12svh,7rem)] pb-[clamp(1.5rem,4svh,2.5rem)]">
       {/* Top: headline + word index */}
       <div className="grid grid-cols-12 gap-6">
         <div className="col-span-12 md:col-span-8">
-          <p className="label mb-8 flex items-center gap-2.5">
+          <p className="label mb-[clamp(1rem,3svh,2rem)] flex items-center gap-2.5">
             <span className="inline-block h-1.5 w-1.5 bg-primary motion-safe:animate-pulse" />
             Open to the right opportunity
           </p>
-          <h1 className="text-[clamp(2.5rem,6.4vw,6rem)] leading-[0.98]">
+          <h1 className="text-[clamp(2.5rem,min(6.4vw,9svh),6rem)] leading-[0.98]">
             I build the working parts of the&nbsp;web.
           </h1>
         </div>
-        <div className="col-span-12 md:col-span-3 md:col-start-10 md:pt-16">
+        <div className="col-span-12 md:col-span-3 md:col-start-10 md:pt-16 max-md:[@media(max-height:760px)]:hidden">
           <WordIndex />
         </div>
       </div>
 
       {/* Middle: three small framed figures */}
-      <div className="grid grid-cols-3 grid-rows-[1fr_auto] gap-x-3 md:gap-x-10 my-16 md:my-20 max-w-3xl mx-auto w-full">
+      <div className="grid grid-cols-3 grid-rows-[1fr_auto] gap-x-3 md:gap-x-10 my-[clamp(1.5rem,5svh,4rem)] md:my-[clamp(1.5rem,5svh,5rem)] max-w-3xl md:max-w-[min(48rem,calc(60svh_+_5rem))] mx-auto w-full">
         <figure className="row-span-2 grid grid-rows-subgrid grid-cols-1 min-w-0">
-          <div className="figure-frame min-h-36 md:aspect-square flex items-end p-3 md:p-4">
+          <div className="figure-frame min-h-[clamp(7rem,18svh,9rem)] md:min-h-0 md:aspect-square flex items-start p-3 md:p-4">
             <StatFigure kind="count" target={9} padLength={2} suffix="+" label="Years shipping" />
           </div>
           <FigCaption index={1}>experience</FigCaption>
         </figure>
         <figure className="row-span-2 grid grid-rows-subgrid grid-cols-1 min-w-0">
-          <div className="figure-frame min-h-36 md:aspect-square flex items-end p-3 md:p-4">
+          <div className="figure-frame min-h-[clamp(7rem,18svh,9rem)] md:min-h-0 md:aspect-square flex items-start p-3 md:p-4">
             <StatFigure kind="count" target={4} padLength={2} label="Ecosystems" />
           </div>
           <FigCaption index={2}>range</FigCaption>
         </figure>
         <figure className="row-span-2 grid grid-rows-subgrid grid-cols-1 min-w-0">
-          <div className="figure-frame min-h-36 md:aspect-square overflow-hidden">
+          <div className="figure-frame min-h-[clamp(7rem,18svh,9rem)] md:min-h-0 md:aspect-square overflow-hidden">
             <HeroCanvas />
           </div>
           <FigCaption index={3}>
@@ -86,11 +86,11 @@ export const Hero: React.FC = () => {
 
       {/* Bottom: intro copy + plain text links */}
       <div className="grid grid-cols-12 gap-6 items-end">
-        <p className="col-span-12 md:col-span-5 text-text-muted max-w-md">
+        <p className="col-span-12 md:col-span-5 text-[13px] md:text-sm text-text-muted max-w-md">
           Full-stack developer shipping across WordPress, Shopify, Webflow and Next.js, with an
           AI-assisted build process. Scroll to see the skills at work instead of reading about them.
         </p>
-        <div className="col-span-12 md:col-span-3 md:col-start-10 flex flex-col gap-2">
+        <div className="col-span-12 md:col-span-3 md:col-start-10 flex flex-row gap-6 md:flex-col md:gap-2">
           <a href="#lab" className="label text-text-base hover:text-primary transition-colors">→ See it in action</a>
           <a href="#contact" className="label text-text-base hover:text-primary transition-colors">→ Let&apos;s talk</a>
         </div>

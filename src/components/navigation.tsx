@@ -1,16 +1,10 @@
 "use client"
 
 import React, { useState, useEffect } from "react"
-import gsap from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { cn } from "@/lib/utils"
 import { sections } from "@/lib/sections"
 import { prefersReducedMotion } from "@/lib/motion"
 import { ThemeToggle } from "./theme-toggle"
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger)
-}
 
 /**
  * Fixed top bar. Desktop: name left, section links centred, location + theme right.
@@ -19,18 +13,23 @@ if (typeof window !== "undefined") {
 export const Navigation: React.FC = () => {
   const [activeSection, setActiveSection] = useState(sections[0].id)
 
+  // Highlight whichever section crosses the middle of the viewport. An
+  // IntersectionObserver follows the live layout, so it stays correct when
+  // sections grow after load (Lab demos, fonts, images).
   useEffect(() => {
-    const triggers = sections.map((section) =>
-      ScrollTrigger.create({
-        trigger: `#${section.id}`,
-        start: "top center",
-        end: "bottom center",
-        onToggle: (self) => {
-          if (self.isActive) setActiveSection(section.id)
-        },
-      })
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActiveSection(entry.target.id)
+        }
+      },
+      { rootMargin: "-50% 0px -50% 0px" }
     )
-    return () => triggers.forEach((trigger) => trigger.kill())
+    sections.forEach((section) => {
+      const el = document.getElementById(section.id)
+      if (el) observer.observe(el)
+    })
+    return () => observer.disconnect()
   }, [])
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {

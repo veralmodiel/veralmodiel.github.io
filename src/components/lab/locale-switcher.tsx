@@ -24,13 +24,13 @@ export const LocaleSwitcher: React.FC = () => {
 
   return (
     <>
-      <div className="flex gap-2 mb-6">
+      <div className="grid grid-cols-3 gap-2 mb-6">
         {regions.map((r) => (
           <button
             key={r.id}
             onClick={() => setRegionId(r.id)}
             className={cn(
-              "flex-1 px-3 py-2 rounded-xl text-xs font-bold border transition-all",
+              "label min-w-0 px-2 py-2 leading-tight border transition-colors",
               regionId === r.id
                 ? "border-primary text-primary bg-primary/10"
                 : "border-border-subtle text-text-muted hover:border-primary/30"

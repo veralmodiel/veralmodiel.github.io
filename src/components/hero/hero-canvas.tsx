@@ -191,5 +191,5 @@ export const HeroCanvas: React.FC = () => {
     }
   }, [])
 
-  return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full cursor-crosshair" aria-hidden="true" />
+  return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full cursor-crosshair" data-cursor="hide" aria-hidden="true" />
 }
