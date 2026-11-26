@@ -18,20 +18,16 @@ export default function Home() {
         <Skills />
         <Lab />
         <Contact />
-        
-        <footer className="pt-10 pb-8 border-t border-border-subtle">
-          <div className="max-w-6xl mx-auto px-4">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-6 text-text-muted text-sm pb-8">
-              <p>&copy; 2026 Ver Almodiel. All rights reserved.</p>
-              <div className="flex gap-8">
-                <a href="https://github.com/veralmodiel" target="_blank" className="hover:text-text-base transition-colors">GitHub</a>
-                <a href="https://linkedin.com/in/veralmodiel" target="_blank" className="hover:text-text-base transition-colors">LinkedIn</a>
-                <a href="https://drive.google.com/file/d/1MHM-fJmBDdN5H8YCWkCLjUu_o_79LyjR/view" target="_blank" className="hover:text-text-base transition-colors">Resume</a>
-              </div>
+
+        <footer className="shell border-t border-border-hairline pt-10 pb-12">
+          <div className="grid grid-cols-12 gap-6">
+            <p className="label col-span-12 md:col-span-4">&copy; 2026 Ver Almodiel</p>
+            <div className="col-span-12 md:col-span-4 flex gap-6">
+              <a href="https://github.com/veralmodiel" target="_blank" className="label hover:text-text-base">GitHub</a>
+              <a href="https://linkedin.com/in/veralmodiel" target="_blank" className="label hover:text-text-base">LinkedIn</a>
+              <a href="https://drive.google.com/file/d/1MHM-fJmBDdN5H8YCWkCLjUu_o_79LyjR/view" target="_blank" className="label hover:text-text-base">Resume</a>
             </div>
-            <p className="text-center font-mono text-xs text-text-muted/60 pt-8 border-t border-border-subtle">
-              I built this with some AI assistance, because why not.
-            </p>
+            <p className="label col-span-12 md:col-span-4 md:text-right">Built by Ver × Claude.</p>
           </div>
         </footer>
       </div>

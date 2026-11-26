@@ -1,32 +1,27 @@
 import React from "react"
-import { LucideIcon } from "lucide-react"
 import { FigCaption } from "@/components/ui/fig-caption"
 
 interface LabCardProps {
   index: number
   title: string
   blurb: string
-  Icon: LucideIcon
-  iconColor: string
   children: React.ReactNode
 }
 
-export const LabCard: React.FC<LabCardProps> = ({ index, title, blurb, Icon, iconColor, children }) => {
+/** One Lab entry as an editorial row: narrow text column left, framed live demo right. */
+export const LabCard: React.FC<LabCardProps> = ({ index, title, blurb, children }) => {
+  const num = String(index).padStart(2, "0")
   return (
-    <figure className="panel p-8 h-full flex flex-col">
-      <div className="flex items-center gap-3 mb-2">
-        <div className="p-2.5 bg-bg-subtle/50 rounded-xl">
-          <Icon size={20} className={iconColor} />
-        </div>
-        <h3 className="text-xl font-bold tracking-tight">{title}</h3>
+    <article className="grid grid-cols-12 gap-6 border-t border-border-hairline pt-6 pb-24 md:pb-40">
+      <div className="col-span-12 md:col-span-4">
+        <p className="label mb-6"><span className="text-primary">{num}</span> / Lab</p>
+        <h3 className="text-2xl md:text-3xl leading-tight mb-4">{title}</h3>
+        <p className="text-text-muted max-w-xs">{blurb}</p>
       </div>
-      <p className="text-sm text-text-muted mb-6">{blurb}</p>
-
-      <div className="flex-1 flex flex-col min-h-0">{children}</div>
-
-      <FigCaption index={index} className="mt-6 pt-4 border-t border-border-hairline">
-        {title.toLowerCase()}
-      </FigCaption>
-    </figure>
+      <figure className="col-span-12 md:col-span-7 md:col-start-6">
+        <div className="figure-frame p-6 md:p-8 min-h-[22rem] flex flex-col">{children}</div>
+        <FigCaption index={num}>{title.toLowerCase()}</FigCaption>
+      </figure>
+    </article>
   )
 }

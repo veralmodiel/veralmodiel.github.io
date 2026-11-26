@@ -2,15 +2,17 @@ import React from "react"
 import { cn } from "@/lib/utils"
 
 interface SectionMarkerProps {
-  marker: string
   label: string
+  /** Kept for compatibility; no longer rendered. */
+  marker?: string
   className?: string
 }
 
-export const SectionMarker: React.FC<SectionMarkerProps> = ({ marker, label, className }) => {
+/** Small section label: accent square + name. */
+export const SectionMarker: React.FC<SectionMarkerProps> = ({ label, className }) => {
   return (
-    <div className={cn("font-mono text-xs uppercase tracking-[0.3em] text-text-muted flex items-center gap-2", className)}>
-      <span className="text-primary">{"{"}{marker}{"}"}</span>
+    <div className={cn("label flex items-center gap-2.5", className)}>
+      <span className="inline-block h-1.5 w-1.5 bg-primary" aria-hidden="true" />
       <span>{label}</span>
     </div>
   )

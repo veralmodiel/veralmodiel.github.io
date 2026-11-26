@@ -1,5 +1,5 @@
 import React from "react"
-import { GitBranch, LayoutTemplate, Terminal, ShoppingCart, Palette, Globe2, Layers, CalendarCheck, LucideIcon } from "lucide-react"
+import { GitBranch, LayoutTemplate, Terminal, ShoppingCart, Palette, Globe2, Layers, LucideIcon } from "lucide-react"
 import { LiveRepos } from "@/components/lab/live-repos"
 import { BlockBuilder } from "@/components/lab/block-builder"
 import { DeployConsole } from "@/components/lab/deploy-console"
@@ -7,7 +7,6 @@ import { CartCalculator } from "@/components/lab/cart-calculator"
 import { CampaignThemer } from "@/components/lab/campaign-themer"
 import { LocaleSwitcher } from "@/components/lab/locale-switcher"
 import { DesignHandoff } from "@/components/lab/design-handoff"
-import { BookingForm } from "@/components/lab/booking-form"
 
 export interface LabItem {
   id: string
@@ -82,14 +81,5 @@ export const labItems: LabItem[] = [
     Icon: Layers,
     iconColor: "text-slate-400",
     node: <DesignHandoff />,
-  },
-  {
-    id: "booking-form",
-    index: 8,
-    title: "Booking Enquiry",
-    blurb: "Real-time validation for the enquiry and booking forms that hospitality and events sites run on.",
-    Icon: CalendarCheck,
-    iconColor: "text-amber-400",
-    node: <BookingForm />,
   },
 ]

@@ -92,12 +92,12 @@ export const Contact: React.FC = () => {
   }
 
   return (
-    <section id="contact" className="py-20 md:py-32 relative z-10">
-      <div className="max-w-6xl mx-auto px-4">
+    <section id="contact" className="shell py-24 md:py-40 relative z-10">
+      <div>
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div>
-            <SectionMarker marker="D" label="Contact" className="mb-6" />
-            <h2 ref={headingRef} className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8">
+            <SectionMarker label="Contact" className="mb-6" />
+            <h2 ref={headingRef} className="text-[clamp(2rem,5vw,4.5rem)] leading-[1.02] mb-8">
               Ready to <br />Collaborate?
             </h2>
             <p className="text-text-muted text-lg mb-12 max-w-md leading-relaxed">
@@ -121,7 +121,7 @@ export const Contact: React.FC = () => {
           </div>
 
           <div className="relative">
-            <div ref={formPanelRef} className="panel p-10 md:p-12 transition-colors hover:border-primary/30">
+            <div ref={formPanelRef} className="md:border md:border-border-hairline md:p-12 transition-colors md:hover:border-primary/30">
               <AnimatePresence mode="wait">
                 {status === "success" ? (
                   <motion.div

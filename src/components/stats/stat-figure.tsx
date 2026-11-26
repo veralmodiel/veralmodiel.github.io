@@ -74,9 +74,9 @@ function CountStat({ target, prefix = "", suffix = "", padLength = 1, label, cla
 
   return (
     <div className={cn("text-left", className)}>
-      <svg width="100%" height="6" viewBox="0 0 100 6" preserveAspectRatio="none" className="mb-4 block">
-        <rect x="0" y="0" width="100" height="6" rx="3" className="fill-bg-subtle" />
-        <rect ref={barRef} x="0" y="0" width="0" height="6" rx="3" className="fill-primary" />
+      <svg width="100%" height="16" viewBox="0 0 100 16" preserveAspectRatio="none" className="mb-4 block overflow-visible">
+        <rect x="0" y="7" width="100" height="2" className="fill-border-subtle" />
+        <rect ref={barRef} x="0" y="5" width="0" height="6" className="fill-primary" />
       </svg>
       <div ref={countRef} className="text-3xl md:text-4xl font-extrabold font-mono mb-1">
         {prefix}{String(0).padStart(padLength, "0")}{suffix}
@@ -132,8 +132,10 @@ function RangeStat({ rangeMin, rangeMax, rangeSuffix = "", label, className }: R
   return (
     <div className={cn("text-left", className)}>
       <svg width="100%" height="16" viewBox="0 0 100 16" preserveAspectRatio="none" className="mb-4 block overflow-visible">
-        <rect x="0" y="5" width="100" height="6" rx="3" className="fill-bg-subtle" />
-        <rect ref={barRef} x={rangeMin} y="5" width="0" height="6" rx="3" className="fill-primary" />
+        <rect x="0" y="7" width="100" height="2" className="fill-border-subtle" />
+        <rect x="0" y="2" width="0.6" height="12" className="fill-text-muted" />
+        <rect x="99.4" y="2" width="0.6" height="12" className="fill-text-muted" />
+        <rect ref={barRef} x={rangeMin} y="5" width="0" height="6" className="fill-primary" />
       </svg>
       <div className="text-3xl md:text-4xl font-extrabold font-mono mb-1">
         <span ref={minRef} />–<span ref={maxRef} />
@@ -146,11 +148,9 @@ function RangeStat({ rangeMin, rangeMax, rangeSuffix = "", label, className }: R
 function GlyphStat({ value, label, className }: GlyphStatProps) {
   return (
     <div className={cn("text-left", className)}>
-      <div className="relative flex items-center mb-4 h-[22px] w-[22px]">
-        <span className="motion-safe:animate-ping absolute inline-flex h-full w-full rounded-full bg-primary/40" />
-        <span className="relative inline-flex items-center justify-center h-[22px] w-[22px] rounded-full bg-primary/10 border border-primary/40">
-          <Globe size={12} className="text-primary" />
-        </span>
+      <div className="flex items-center gap-2 mb-4 h-4">
+        <Globe size={16} strokeWidth={1.5} className="text-primary" />
+        <span className="h-px flex-1 bg-border-subtle" />
       </div>
       <div className="text-3xl md:text-4xl font-extrabold font-mono mb-1">{value}</div>
       <div className="text-xs uppercase tracking-widest text-text-muted leading-relaxed">{label}</div>

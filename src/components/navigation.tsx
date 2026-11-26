@@ -1,11 +1,8 @@
 "use client"
 
 import React, { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X } from "lucide-react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
-import { useLenis } from "lenis/react"
 import { cn } from "@/lib/utils"
 import { sections } from "@/lib/sections"
 import { prefersReducedMotion } from "@/lib/motion"
@@ -15,19 +12,12 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger)
 }
 
+/**
+ * Fixed top bar. Desktop: name left, section links centred, location + theme right.
+ * Mobile: only four links, so they stay visible as a second row instead of hiding behind a menu.
+ */
 export const Navigation: React.FC = () => {
-  const [mounted, setMounted] = useState(false)
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState(sections[0].id)
-  const [scrolled, setScrolled] = useState(false)
-  const lenis = useLenis()
-
-  useEffect(() => {
-    setTimeout(() => setMounted(true), 0)
-    const handleScroll = () => setScrolled(window.scrollY > 50)
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
 
   useEffect(() => {
     const triggers = sections.map((section) =>
@@ -45,91 +35,61 @@ export const Navigation: React.FC = () => {
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault()
-    const target = document.getElementById(id)
-    if (!target) return
-
-    if (lenis) {
-      lenis.scrollTo(target, { offset: -16 })
-    } else {
-      target.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth" })
-    }
-    setIsMenuOpen(false)
+    document.getElementById(id)?.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth" })
   }
 
-  if (!mounted) return null
+  const links = () =>
+    sections.map((section) => {
+      const active = activeSection === section.id
+      return (
+        <a
+          key={section.id}
+          href={`#${section.id}`}
+          onClick={(e) => handleNavClick(e, section.id)}
+          aria-current={active ? "true" : undefined}
+          className={cn(
+            "label relative transition-colors hover:text-text-base",
+            active && "text-text-base"
+          )}
+        >
+          {section.label}
+          <span
+            className={cn(
+              "absolute -bottom-1.5 left-0 h-px bg-primary transition-all duration-300",
+              active ? "w-full" : "w-0"
+            )}
+            aria-hidden="true"
+          />
+        </a>
+      )
+    })
 
   return (
     <>
-      <nav
-        className={cn(
-          "fixed top-6 left-1/2 -translate-x-1/2 z-[150] transition-all duration-500 w-[90%] max-w-2xl px-6 py-2 rounded-full border border-border-subtle",
-          scrolled ? "bg-bg-base/80 backdrop-blur-xl shadow-2xl py-3 border-border-subtle" : "bg-transparent"
-        )}
-      >
-        <div className="flex justify-between items-center text-text-base">
-          <div className="text-sm font-bold tracking-tighter">
-            VER<span className="text-primary">_ALMODIEL</span>
-          </div>
+      <header className="fixed inset-x-0 top-0 z-[150] bg-bg-base border-b border-border-hairline">
+        <div className="shell grid grid-cols-[1fr_auto] md:grid-cols-[1fr_auto_1fr] items-center">
+          <a
+            href="#about"
+            onClick={(e) => handleNavClick(e, "about")}
+            className="justify-self-start h-14 flex items-center text-[13px] uppercase tracking-[0.18em] text-text-base"
+          >
+            Ver Almodiel<span className="text-primary">.</span>
+          </a>
 
-          {/* Desktop Nav */}
-          <div className="hidden md:flex gap-8 items-center">
-            {sections.map((section) => (
-              <a
-                key={section.id}
-                href={`#${section.id}`}
-                onClick={(e) => handleNavClick(e, section.id)}
-                className={cn(
-                  "font-mono text-xs uppercase tracking-widest transition-all hover:text-primary flex items-center gap-1.5",
-                  activeSection === section.id ? "text-primary" : "text-text-muted"
-                )}
-              >
-                <span className="opacity-60">{"{"}{section.marker}{"}"}</span>
-                {section.label}
-              </a>
-            ))}
-            <div className="w-[1px] h-4 bg-border-subtle mx-2" />
-            <ThemeToggle />
-          </div>
+          <nav
+            aria-label="Sections"
+            className="order-last md:order-none col-span-2 md:col-span-1 flex items-center justify-between md:justify-center md:gap-8 h-11 md:h-14 border-t md:border-t-0 border-border-hairline"
+          >
+            {links()}
+          </nav>
 
-          {/* Mobile Toggle Group */}
-          <div className="flex items-center gap-4 md:hidden">
+          <div className="justify-self-end flex items-center gap-6">
+            <span className="label hidden lg:inline">Bacolod City — Remote</span>
             <ThemeToggle />
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-text-muted hover:text-primary transition-colors"
-            >
-              {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
-            </button>
           </div>
         </div>
-      </nav>
+      </header>
 
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {isMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 z-[140] bg-bg-base/98 backdrop-blur-2xl flex flex-col items-center justify-center gap-10 md:hidden"
-          >
-            {sections.map((section) => (
-              <a
-                key={section.id}
-                href={`#${section.id}`}
-                onClick={(e) => handleNavClick(e, section.id)}
-                className={cn(
-                  "text-2xl font-bold tracking-tight transition-all flex items-center gap-3",
-                  activeSection === section.id ? "text-primary" : "text-text-muted"
-                )}
-              >
-                <span className="font-mono text-sm opacity-60">{"{"}{section.marker}{"}"}</span>
-                {section.label}
-              </a>
-            ))}
-          </motion.div>
-        )}
-      </AnimatePresence>
     </>
   )
 }

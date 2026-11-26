@@ -22,6 +22,12 @@ export const HeroCanvas: React.FC = () => {
     let running = false
     let rafId = 0
 
+    // Pointer interaction: dots lean away from the mouse and light up near it;
+    // a click or tap sends a ripple across the field.
+    const pointer = { x: 0, y: 0, inside: false }
+    let influence = 0 // eased 0→1 while the mouse is over the canvas
+    const ripples: { x: number; y: number; start: number }[] = []
+
     const mutedColor = () =>
       getComputedStyle(document.documentElement).getPropertyValue("--text-muted").trim() || "#8f8f8f"
     const accentColor = () =>
@@ -59,6 +65,10 @@ export const HeroCanvas: React.FC = () => {
       const accent = accentColor()
       const offsetX = (width - cols * spacing) / 2 + spacing / 2
       const offsetY = (height - rows * spacing) / 2 + spacing / 2
+      const reach = Math.max(width, height)
+
+      influence += ((pointer.inside ? 1 : 0) - influence) * 0.12
+      while (ripples.length && t - ripples[0].start > 1100) ripples.shift()
 
       for (let row = 0; row < rows; row++) {
         for (let col = 0; col < cols; col++) {
@@ -69,10 +79,42 @@ export const HeroCanvas: React.FC = () => {
           const y = baseY + wave * spacing * 0.35
           const intensity = (wave + 1) / 2
 
-          ctx!.fillStyle = intensity > 0.82 ? accent : muted
-          ctx!.globalAlpha = 0.15 + intensity * 0.35
-          const size = 1 + intensity * 1.6
-          ctx!.fillRect(x - size / 2, y - size / 2, size, size)
+          let px = x
+          let py = y
+          let lit = 0
+
+          if (influence > 0.01) {
+            const dx = x - pointer.x
+            const dy = y - pointer.y
+            const dist = Math.hypot(dx, dy) || 1
+            const radius = reach * 0.45
+            if (dist < radius) {
+              const f = (1 - dist / radius) ** 2 * influence
+              px += (dx / dist) * f * spacing * 1.2
+              py += (dy / dist) * f * spacing * 1.2
+              lit = Math.max(lit, f)
+            }
+          }
+
+          for (const r of ripples) {
+            const age = (t - r.start) / 1100
+            const dx = x - r.x
+            const dy = y - r.y
+            const dist = Math.hypot(dx, dy) || 1
+            const band = 1 - Math.abs(dist - age * reach * 1.3) / (spacing * 1.4)
+            if (band > 0) {
+              const f = band * (1 - age)
+              px += (dx / dist) * f * spacing * 0.6
+              py += (dy / dist) * f * spacing * 0.6
+              lit = Math.max(lit, f)
+            }
+          }
+
+          const glow = Math.max(intensity, lit)
+          ctx!.fillStyle = intensity > 0.82 || lit > 0.3 ? accent : muted
+          ctx!.globalAlpha = 0.15 + glow * 0.45
+          const size = 1 + glow * 1.8
+          ctx!.fillRect(px - size / 2, py - size / 2, size, size)
         }
       }
       ctx!.globalAlpha = 1
@@ -98,6 +140,29 @@ export const HeroCanvas: React.FC = () => {
     }
     window.addEventListener("resize", handleResize)
 
+    const toLocal = (e: PointerEvent) => {
+      const rect = canvas.getBoundingClientRect()
+      pointer.x = e.clientX - rect.left
+      pointer.y = e.clientY - rect.top
+    }
+    const onMove = (e: PointerEvent) => {
+      toLocal(e)
+      pointer.inside = e.pointerType === "mouse" // touch only gets ripples, so scrolling stays normal
+    }
+    const onLeave = () => {
+      pointer.inside = false
+    }
+    const onDown = (e: PointerEvent) => {
+      toLocal(e)
+      ripples.push({ x: pointer.x, y: pointer.y, start: performance.now() })
+      if (ripples.length > 4) ripples.shift()
+    }
+    if (!reduced) {
+      canvas.addEventListener("pointermove", onMove)
+      canvas.addEventListener("pointerleave", onLeave)
+      canvas.addEventListener("pointerdown", onDown)
+    }
+
     let observer: IntersectionObserver | null = null
     if (!reduced && section) {
       observer = new IntersectionObserver(
@@ -119,9 +184,12 @@ export const HeroCanvas: React.FC = () => {
       running = false
       cancelAnimationFrame(rafId)
       window.removeEventListener("resize", handleResize)
+      canvas.removeEventListener("pointermove", onMove)
+      canvas.removeEventListener("pointerleave", onLeave)
+      canvas.removeEventListener("pointerdown", onDown)
       observer?.disconnect()
     }
   }, [])
 
-  return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" aria-hidden="true" />
+  return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full cursor-crosshair" aria-hidden="true" />
 }

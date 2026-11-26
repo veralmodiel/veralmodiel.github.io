@@ -7,10 +7,13 @@ interface FigCaptionProps {
   className?: string
 }
 
+/** Caption under a framed visual: "[01] label". */
 export const FigCaption: React.FC<FigCaptionProps> = ({ index, children, className }) => {
+  const num = typeof index === "number" ? String(index).padStart(2, "0") : index
   return (
-    <figcaption className={cn("font-mono text-[11px] uppercase tracking-widest text-text-muted", className)}>
-      Fig. {index} — {children}
+    <figcaption className={cn("label mt-3 flex flex-col gap-0.5 sm:flex-row sm:gap-2", className)}>
+      <span className="text-primary">[{num}]</span>
+      <span>{children}</span>
     </figcaption>
   )
 }
