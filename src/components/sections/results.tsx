@@ -2,12 +2,34 @@
 
 import React from "react"
 import { useSectionReveal } from "@/hooks/use-section-reveal"
+import { StatFigure } from "@/components/stats/stat-figure"
+import { FigCaption } from "@/components/ui/fig-caption"
 
 const results = [
-  { value: "40+", label: "Websites delivered across e-commerce & corporate" },
-  { value: "30–50%", label: "Faster load times through performance tuning" },
-  { value: "20–40%", label: "Faster delivery using AI-assisted workflows" },
-  { value: "Remote", label: "International clients, fully remote delivery" },
+  {
+    fig: "1.2",
+    label: "Websites delivered across e-commerce & corporate",
+    caption: "delivery volume",
+    stat: { kind: "count" as const, target: 40, suffix: "+" },
+  },
+  {
+    fig: "1.3",
+    label: "Faster load times through performance tuning",
+    caption: "load time gain",
+    stat: { kind: "range" as const, rangeMin: 30, rangeMax: 50, rangeSuffix: "%" },
+  },
+  {
+    fig: "1.4",
+    label: "Faster delivery using AI-assisted workflows",
+    caption: "delivery speed gain",
+    stat: { kind: "range" as const, rangeMin: 20, rangeMax: 40, rangeSuffix: "%" },
+  },
+  {
+    fig: "1.5",
+    label: "International clients, fully remote delivery",
+    caption: "delivery model",
+    stat: { kind: "glyph" as const, value: "Remote" },
+  },
 ]
 
 export const Results: React.FC = () => {
@@ -17,10 +39,12 @@ export const Results: React.FC = () => {
     <section className="py-16 relative z-10">
       <div className="max-w-6xl mx-auto px-4">
         <div ref={ref} className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          {results.map((stat) => (
-            <div key={stat.label} className="reveal-stat panel px-6 py-8 text-center">
-              <div className="text-3xl md:text-4xl font-extrabold text-gradient mb-2 font-mono">{stat.value}</div>
-              <div className="text-xs uppercase tracking-widest text-text-muted leading-relaxed">{stat.label}</div>
+          {results.map((item) => (
+            <div key={item.fig} className="reveal-stat panel px-6 py-8">
+              <StatFigure {...item.stat} label={item.label} />
+              <FigCaption index={item.fig} className="mt-4 pt-4 border-t border-border-hairline">
+                {item.caption}
+              </FigCaption>
             </div>
           ))}
         </div>

@@ -10,14 +10,15 @@ import { SectionMarker } from "@/components/ui/section-marker"
 import { FigCaption } from "@/components/ui/fig-caption"
 import { HeroCanvas } from "@/components/hero/hero-canvas"
 import { WordStack } from "@/components/hero/word-stack"
+import { StatFigure } from "@/components/stats/stat-figure"
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger, useGSAP)
 }
 
 const stats = [
-  { value: "09+", label: "Years shipping production code" },
-  { value: "04", label: "Ecosystems mastered end to end" },
+  { target: 9, padLength: 2, suffix: "+", label: "Years shipping production code" },
+  { target: 4, padLength: 2, label: "Ecosystems mastered end to end" },
 ]
 
 const headlineWords = ["working parts", "fast storefronts", "clean backends", "shipped features"]
@@ -128,14 +129,13 @@ export const Hero: React.FC = () => {
         >
           {stats.map((stat) => (
             <div key={stat.label} className="panel px-6 py-6">
-              <div className="text-3xl md:text-4xl font-extrabold text-gradient mb-1 font-mono">{stat.value}</div>
-              <div className="text-xs uppercase tracking-widest text-text-muted">{stat.label}</div>
+              <StatFigure kind="count" {...stat} />
             </div>
           ))}
         </motion.div>
       </div>
 
-      <FigCaption index={1} className="absolute bottom-6 left-6 z-10">
+      <FigCaption index="1.1" className="absolute bottom-6 left-6 z-10">
         generated field
       </FigCaption>
     </section>
