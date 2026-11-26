@@ -1,95 +1,99 @@
 "use client"
 
-import React from "react"
-import { motion } from "framer-motion"
-import { ArrowRight } from "lucide-react"
+import React, { useEffect, useState } from "react"
+import dynamic from "next/dynamic"
+import { cn } from "@/lib/utils"
+import { prefersReducedMotion } from "@/lib/motion"
+import { FigCaption } from "@/components/ui/fig-caption"
+import { StatFigure } from "@/components/stats/stat-figure"
 
-interface HeroProps {
-  isLoaded?: boolean
+const HeroCanvas = dynamic(() => import("@/components/hero/hero-canvas").then((m) => m.HeroCanvas), {
+  ssr: false,
+})
+
+const words = ["Storefronts", "Backends", "Integrations", "Design systems", "Deploys", "Performance", "Features"]
+
+/** Vertical word index; one word lit at a time. */
+function WordIndex() {
+  const [active, setActive] = useState(0)
+
+  useEffect(() => {
+    if (prefersReducedMotion()) return
+    const id = setInterval(() => setActive((i) => (i + 1) % words.length), 1600)
+    return () => clearInterval(id)
+  }, [])
+
+  return (
+    <ul className="flex flex-row flex-wrap gap-x-4 gap-y-1 md:flex-col md:gap-1" aria-label="What I build">
+      {words.map((word, i) => (
+        <li
+          key={word}
+          className={cn(
+            "label transition-colors duration-500",
+            i === active ? "text-primary" : "text-text-muted/50"
+          )}
+        >
+          {word}
+        </li>
+      ))}
+    </ul>
+  )
 }
 
-const stats = [
-  { value: "09+", label: "Years shipping production code" },
-  { value: "04", label: "Ecosystems mastered end to end" },
-]
-
-export const Hero: React.FC<HeroProps> = ({ isLoaded = true }) => {
+export const Hero: React.FC = () => {
   return (
-    <section id="about" className="relative min-h-screen flex items-center justify-center pt-32 pb-20 px-4">
-      <div className="max-w-5xl w-full text-center">
-        {/* Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass glow-btn text-primary text-xs font-semibold uppercase tracking-widest mb-8"
-        >
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-          </span>
-          Open to full-time roles
-        </motion.div>
+    <section id="about" className="shell relative min-h-screen flex flex-col justify-between pt-[clamp(7rem,17svh,9rem)] md:pt-[clamp(5rem,12svh,7rem)] pb-[clamp(1.5rem,4svh,2.5rem)]">
+      {/* Top: headline + word index */}
+      <div className="grid grid-cols-12 gap-6">
+        <div className="col-span-12 md:col-span-8">
+          <p className="label mb-[clamp(1rem,3svh,2rem)] flex items-center gap-2.5">
+            <span className="inline-block h-1.5 w-1.5 bg-primary motion-safe:animate-pulse" />
+            Open to the right opportunity
+          </p>
+          <h1 className="text-[clamp(2.5rem,min(6.4vw,9svh),6rem)] leading-[0.98]">
+            I build the working parts of the&nbsp;web.
+          </h1>
+        </div>
+        <div className="col-span-12 md:col-span-3 md:col-start-10 md:pt-16 max-md:[@media(max-height:760px)]:hidden">
+          <WordIndex />
+        </div>
+      </div>
 
-        {/* Headline */}
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.7, delay: 0.1 }}
-          className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-8 leading-[1.05]"
-        >
-          I build the <span className="text-gradient">working parts</span> of the web.
-        </motion.h1>
+      {/* Middle: three small framed figures */}
+      <div className="grid grid-cols-3 grid-rows-[1fr_auto] gap-x-3 md:gap-x-10 my-[clamp(1.5rem,5svh,4rem)] md:my-[clamp(1.5rem,5svh,5rem)] max-w-3xl md:max-w-[min(48rem,calc(60svh_+_5rem))] mx-auto w-full">
+        <figure className="row-span-2 grid grid-rows-subgrid grid-cols-1 min-w-0">
+          <div className="figure-frame min-h-[clamp(7rem,18svh,9rem)] md:min-h-0 md:aspect-square flex items-start p-3 md:p-4">
+            <StatFigure kind="count" target={9} padLength={2} suffix="+" label="Years shipping" />
+          </div>
+          <FigCaption index={1}>experience</FigCaption>
+        </figure>
+        <figure className="row-span-2 grid grid-rows-subgrid grid-cols-1 min-w-0">
+          <div className="figure-frame min-h-[clamp(7rem,18svh,9rem)] md:min-h-0 md:aspect-square flex items-start p-3 md:p-4">
+            <StatFigure kind="count" target={4} padLength={2} label="Ecosystems" />
+          </div>
+          <FigCaption index={2}>range</FigCaption>
+        </figure>
+        <figure className="row-span-2 grid grid-rows-subgrid grid-cols-1 min-w-0">
+          <div className="figure-frame min-h-[clamp(7rem,18svh,9rem)] md:min-h-0 md:aspect-square overflow-hidden">
+            <HeroCanvas />
+          </div>
+          <FigCaption index={3}>
+            <span className="hidden md:inline">Live canvas — move your cursor</span>
+            <span className="md:hidden">Live canvas — tap it</span>
+          </FigCaption>
+        </figure>
+      </div>
 
-        {/* Subtext */}
-        <motion.p
-          initial={{ opacity: 0, y: 30 }}
-          animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          className="text-lg md:text-xl text-text-muted max-w-2xl mx-auto mb-12 leading-relaxed"
-        >
-          Full-stack developer who ships across WordPress, Shopify, Webflow and Next.js, and pairs that with an AI-assisted build process. Scroll down to see the skills at work instead of reading about them.
-        </motion.p>
-
-        {/* Actions */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.7, delay: 0.3 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-20"
-        >
-          <a
-            href="#lab"
-            className="group relative px-8 py-4 bg-text-base text-bg-base font-bold rounded-full overflow-hidden transition-all hover:scale-105 active:scale-95"
-          >
-            <div className="relative z-10 flex items-center gap-2">
-              See it in action <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-            </div>
-            <div className="absolute inset-0 bg-linear-to-r from-primary to-secondary opacity-0 group-hover:opacity-10 transition-opacity" />
-          </a>
-
-          <a
-            href="#contact"
-            className="group px-8 py-4 bg-bg-subtle text-text-base font-bold rounded-full border border-border-subtle hover:bg-bg-base transition-all active:scale-95 flex items-center gap-2"
-          >
-            Let&apos;s talk <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-          </a>
-        </motion.div>
-
-        {/* Stat Row */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.7, delay: 0.4 }}
-          className="grid grid-cols-2 gap-4 max-w-md mx-auto"
-        >
-          {stats.map((stat) => (
-            <div key={stat.label} className="glass rounded-3xl px-6 py-6">
-              <div className="text-3xl md:text-4xl font-extrabold text-gradient mb-1 font-mono">{stat.value}</div>
-              <div className="text-xs uppercase tracking-widest text-text-muted">{stat.label}</div>
-            </div>
-          ))}
-        </motion.div>
+      {/* Bottom: intro copy + plain text links */}
+      <div className="grid grid-cols-12 gap-6 items-end">
+        <p className="col-span-12 md:col-span-5 text-[13px] md:text-sm text-text-muted max-w-md">
+          Full-stack developer shipping across WordPress, Shopify, Webflow and Next.js, with an
+          AI-assisted build process. Scroll to see the skills at work instead of reading about them.
+        </p>
+        <div className="col-span-12 md:col-span-3 md:col-start-10 flex flex-row gap-6 md:flex-col md:gap-2">
+          <a href="#lab" className="label text-text-base hover:text-primary transition-colors">→ See it in action</a>
+          <a href="#contact" className="label text-text-base hover:text-primary transition-colors">→ Let&apos;s talk</a>
+        </div>
       </div>
     </section>
   )

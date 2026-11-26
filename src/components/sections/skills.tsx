@@ -1,20 +1,30 @@
 "use client"
 
-import React from "react"
-import { motion } from "framer-motion"
+import React, { useEffect, useMemo, useState } from "react"
 import { Code, Server, Wand2, Globe, BrainCircuit, ShoppingCart, Users, MapPin, Zap, Gauge, Layers, LucideIcon } from "lucide-react"
+import gsap from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { cn } from "@/lib/utils"
+import { SectionMarker } from "@/components/ui/section-marker"
+import { useSectionReveal } from "@/hooks/use-section-reveal"
+import { TagFilter } from "@/components/skills/tag-filter"
+import { LogoCursor } from "@/components/skills/logo-cursor"
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger)
+}
 
 interface Skill {
   name: string
   badge?: string
+  tags: string[]
 }
 
 interface SkillGroup {
   title: string
   Icon: LucideIcon
   iconColor: string
-  skills: (string | Skill)[]
+  skills: Skill[]
   size: "small" | "medium" | "large"
 }
 
@@ -23,21 +33,36 @@ const skillGroups: SkillGroup[] = [
     title: "Core Infrastructure",
     Icon: Server,
     iconColor: "text-blue-400",
-    skills: ["PHP", "MySQL", "JavaScript", "REST APIs"],
+    skills: [
+      { name: "PHP", tags: ["backend"] },
+      { name: "MySQL", tags: ["backend"] },
+      { name: "JavaScript", tags: ["frontend", "backend"] },
+      { name: "REST APIs", tags: ["backend"] },
+    ],
     size: "large"
   },
   {
     title: "Platforms & CMS",
     Icon: Globe,
     iconColor: "text-sky-400",
-    skills: ["WordPress", "Shopify", "Webflow", "WooCommerce"],
+    skills: [
+      { name: "WordPress", tags: ["platform"] },
+      { name: "Shopify", tags: ["platform", "ecommerce"] },
+      { name: "Webflow", tags: ["platform"] },
+      { name: "WooCommerce", tags: ["platform", "ecommerce"] },
+    ],
     size: "large"
   },
   {
     title: "Design-to-Code",
     Icon: Wand2,
     iconColor: "text-amber-400",
-    skills: ["Figma", "Photoshop", "Illustrator", "Adobe XD"],
+    skills: [
+      { name: "Figma", tags: ["design"] },
+      { name: "Photoshop", tags: ["design"] },
+      { name: "Illustrator", tags: ["design"] },
+      { name: "Adobe XD", tags: ["design"] },
+    ],
     size: "small"
   },
   {
@@ -45,9 +70,9 @@ const skillGroups: SkillGroup[] = [
     Icon: Code,
     iconColor: "text-emerald-400",
     skills: [
-      { name: "Next.js", badge: "RECENT" },
-      "Tailwind CSS",
-      "TypeScript"
+      { name: "Next.js", badge: "RECENT", tags: ["frontend"] },
+      { name: "Tailwind CSS", tags: ["frontend"] },
+      { name: "TypeScript", tags: ["frontend"] },
     ],
     size: "medium"
   },
@@ -55,49 +80,84 @@ const skillGroups: SkillGroup[] = [
     title: "AI Proactive",
     Icon: BrainCircuit,
     iconColor: "text-orange-400",
-    skills: ["Gemini", "Claude", "ChatGPT", "Antigravity"],
+    skills: [
+      { name: "Gemini", tags: ["ai"] },
+      { name: "Claude", tags: ["ai"] },
+      { name: "ChatGPT", tags: ["ai"] },
+      { name: "Antigravity", tags: ["ai"] },
+    ],
     size: "medium"
   },
   {
     title: "Ecommerce & Checkout",
     Icon: ShoppingCart,
     iconColor: "text-teal-400",
-    skills: ["Shopify", "WooCommerce", "Payment Gateways", "Cart & Checkout UX"],
+    skills: [
+      { name: "Shopify", tags: ["ecommerce", "platform"] },
+      { name: "WooCommerce", tags: ["ecommerce", "platform"] },
+      { name: "Payment Gateways", tags: ["ecommerce"] },
+      { name: "Cart & Checkout UX", tags: ["ecommerce"] },
+    ],
     size: "medium"
   },
   {
     title: "Delivery & Collaboration",
     Icon: Users,
     iconColor: "text-cyan-400",
-    skills: ["Git Workflows", "Multi-Dev Builds", "Design Handoff", "Client Enablement"],
+    skills: [
+      { name: "Git Workflows", tags: ["workflow"] },
+      { name: "Multi-Dev Builds", tags: ["workflow"] },
+      { name: "Design Handoff", tags: ["workflow"] },
+      { name: "Client Enablement", tags: ["workflow"] },
+    ],
     size: "medium"
   },
   {
     title: "Multi-Region Builds",
     Icon: MapPin,
     iconColor: "text-lime-400",
-    skills: ["AU & Singapore Clients", "Localisation", "Multi-Currency", "Timezone-Aware Content"],
+    skills: [
+      { name: "AU & Singapore Clients", tags: ["localization"] },
+      { name: "Localisation", tags: ["localization"] },
+      { name: "Multi-Currency", tags: ["localization"] },
+      { name: "Timezone-Aware Content", tags: ["localization"] },
+    ],
     size: "medium"
   },
   {
     title: "Integrations & Automation",
     Icon: Zap,
     iconColor: "text-slate-400",
-    skills: ["Zapier", "Mailchimp", "Klaviyo", "ActiveCampaign"],
+    skills: [
+      { name: "Zapier", tags: ["ecommerce"] },
+      { name: "Mailchimp", tags: ["ecommerce"] },
+      { name: "Klaviyo", tags: ["ecommerce"] },
+      { name: "ActiveCampaign", tags: ["ecommerce"] },
+    ],
     size: "medium"
   },
   {
     title: "Performance & SEO",
     Icon: Gauge,
     iconColor: "text-yellow-400",
-    skills: ["Page Speed Optimisation", "Technical SEO", "Core Web Vitals"],
+    skills: [
+      { name: "Page Speed Optimisation", tags: ["performance"] },
+      { name: "Technical SEO", tags: ["performance"] },
+      { name: "Core Web Vitals", tags: ["performance"] },
+    ],
     size: "medium"
   },
   {
     title: "Frontend Craft",
     Icon: Layers,
     iconColor: "text-zinc-400",
-    skills: ["SCSS", "jQuery", "GSAP", "Alpine.js", "Bootstrap"],
+    skills: [
+      { name: "SCSS", tags: ["frontend"] },
+      { name: "jQuery", tags: ["frontend"] },
+      { name: "GSAP", tags: ["frontend"] },
+      { name: "Alpine.js", tags: ["frontend"] },
+      { name: "Bootstrap", tags: ["frontend"] },
+    ],
     size: "medium"
   }
 ]
@@ -113,76 +173,88 @@ const industries = [
 ]
 
 export const Skills: React.FC = () => {
+  const headerRef = useSectionReveal<HTMLDivElement>()
+  const gridRef = useSectionReveal<HTMLDivElement>({ selector: ".reveal-card", stagger: 0.08 })
+  const industriesRef = useSectionReveal<HTMLDivElement>()
+
+  const [activeTags, setActiveTags] = useState<string[]>([])
+  const [hovered, setHovered] = useState<Skill | null>(null)
+
+  const allTags = useMemo(
+    () => Array.from(new Set(skillGroups.flatMap((g) => g.skills.flatMap((s) => s.tags)))).sort(),
+    []
+  )
+
+  const toggleTag = (tag: string) => {
+    setActiveTags((prev) => (prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]))
+  }
+
+  const skillMatches = (skill: Skill) => activeTags.length === 0 || skill.tags.some((t) => activeTags.includes(t))
+
+  // Collapsing/dimming changes document height, so GSAP's cached trigger
+  // positions (nav section tracking, card reveals) need recalculating.
+  useEffect(() => {
+    ScrollTrigger.refresh()
+  }, [activeTags])
+
   return (
-    <section id="skills" className="py-20 md:py-32 relative z-10">
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-          <div className="max-w-xl">
-            <motion.h2
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4"
-            >
-              The <span className="text-gradient">Toolkit</span>, in practice
-            </motion.h2>
-            <p className="text-text-muted text-lg">
+    <section id="skills" className="shell py-24 md:py-40 relative z-10">
+      <div>
+        <div ref={headerRef} className="grid grid-cols-12 gap-6 mb-16 md:mb-24">
+          <SectionMarker label="Toolkit" className="col-span-12 md:col-span-4" />
+          <div className="col-span-12 md:col-span-6 md:col-start-6">
+            <h2 className="text-[clamp(1.75rem,3.6vw,3.25rem)] leading-[1.05] mb-6">
+              The Toolkit, in practice
+            </h2>
+            <p className="text-text-muted max-w-md">
               The stack behind everything below. Keep scrolling to the Lab to see a few of these running live rather than just listed.
             </p>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-          {skillGroups.map((group, index) => (
-            <motion.div
-              key={group.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1, duration: 0.8 }}
-              viewport={{ once: true, amount: 0.3, margin: "-100px" }}
-              className={cn(
-                "glass glow-border p-8 rounded-[32px] group transition-colors duration-500",
-                group.size === "large" ? "md:col-span-6" : "md:col-span-6 lg:col-span-4"
-              )}
-            >
-              <div className="flex items-center gap-4 mb-6">
-                <div className="p-3 bg-bg-subtle/50 rounded-2xl group-hover:bg-bg-subtle transition-colors">
-                  <group.Icon size={24} className={group.iconColor} />
-                </div>
-                <h3 className="text-xl font-bold tracking-tight">{group.title}</h3>
-              </div>
-              
-              <div className="flex flex-wrap gap-3">
-                {group.skills.map((skill, sIdx) => {
-                  const isObject = typeof skill !== "string"
-                  const name = isObject ? (skill as Skill).name : (skill as string)
-                  const badge = isObject ? (skill as Skill).badge : null
+        <TagFilter tags={allTags} active={activeTags} onToggle={toggleTag} />
 
-                  return (
-                    <div 
-                      key={sIdx}
-                      className="px-4 py-2 bg-bg-subtle/50 rounded-xl text-sm font-medium text-text-muted border border-border-subtle hover:border-primary/20 hover:bg-bg-subtle transition-all cursor-default flex items-center gap-2 group/skill"
-                    >
-                      {name}
-                      {badge && (
-                        <span className="text-[10px] bg-blue-500/20 text-blue-400 px-1.5 py-0.5 rounded-md font-bold tracking-tighter">
-                          {badge}
-                        </span>
-                      )}
-                    </div>
-                  )
-                })}
+        <div ref={gridRef} data-cursor="hide" className="mt-12 border-b border-border-hairline">
+          {skillGroups.map((group) => {
+            const hasMatch = group.skills.some(skillMatches)
+            if (!hasMatch) return null
+
+            return (
+              <div
+                key={group.title}
+                className="reveal-card grid grid-cols-12 gap-6 border-t border-border-hairline py-6"
+              >
+                <h3 className="col-span-12 md:col-span-4 text-sm leading-snug">{group.title}</h3>
+
+                <div className="col-span-12 md:col-span-7 md:col-start-6 flex flex-wrap gap-x-5 gap-y-2">
+                  {group.skills.map((skill) => {
+                    const matches = skillMatches(skill)
+                    return (
+                      <div
+                        key={skill.name}
+                        onMouseEnter={() => setHovered(skill)}
+                        onMouseLeave={() => setHovered(null)}
+                        className={cn(
+                          "text-text-muted hover:text-primary transition-colors cursor-default flex items-center gap-2",
+                          !matches && "opacity-30"
+                        )}
+                      >
+                        {skill.name}
+                        {skill.badge && (
+                          <span className="label text-[10px] border border-border-hairline px-1">
+                            {skill.badge}
+                          </span>
+                        )}
+                      </div>
+                    )
+                  })}
+                </div>
               </div>
-            </motion.div>
-          ))}
+            )
+          })}
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true, amount: 0.3, margin: "-100px" }}
-          className="mt-6 glass p-8 rounded-[32px]"
-        >
+        <div ref={industriesRef} className="mt-16">
           <h3 className="text-xs uppercase tracking-widest text-text-muted mb-4">Shipped across</h3>
           <div className="flex flex-wrap gap-3">
             {industries.map((industry) => (
@@ -194,8 +266,9 @@ export const Skills: React.FC = () => {
               </span>
             ))}
           </div>
-        </motion.div>
+        </div>
       </div>
+      <LogoCursor name={hovered?.name ?? null} />
     </section>
   )
 }

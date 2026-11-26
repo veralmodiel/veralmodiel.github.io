@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect, useRef, useState } from "react"
-import { RotateCcw, Terminal as TerminalIcon } from "lucide-react"
+import { RotateCcw } from "lucide-react"
 
 const commands: { text: string; kind: "cmd" | "out" }[] = [
   { text: "git commit -m \"ship: refreshed checkout flow\"", kind: "cmd" },
@@ -42,7 +42,6 @@ export const DeployConsole: React.FC = () => {
       setCharIndex(0)
     }, 350)
     return () => clearTimeout(timeout)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [charIndex, lineIndex, runId])
 
   const replay = () => {
@@ -53,45 +52,40 @@ export const DeployConsole: React.FC = () => {
   }
 
   return (
-    <div className="glass glow-border p-8 rounded-[32px] h-full flex flex-col">
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-3">
-          <div className="p-2.5 bg-bg-subtle/50 rounded-xl">
-            <TerminalIcon size={20} className="text-emerald-400" />
-          </div>
-          <h3 className="text-xl font-bold tracking-tight">Deploy Console</h3>
-        </div>
+    <div className="bg-bg-subtle/60 border border-border-hairline overflow-hidden flex-1">
+      <div className="flex items-center gap-1.5 px-4 py-3 border-b border-border-subtle">
+        <div className="w-2 h-2 bg-text-muted/50" />
+        <div className="w-2 h-2 bg-text-muted/30" />
+        <div className="w-2 h-2 bg-text-muted/20" />
+        <span className="ml-3 text-[11px] text-text-muted font-mono">ver@production — deploy</span>
         <button
           onClick={replay}
-          className="text-text-muted hover:text-primary transition-colors"
+          className="ml-auto text-text-muted hover:text-primary transition-colors"
           aria-label="Replay animation"
         >
-          <RotateCcw size={16} />
+          <RotateCcw size={14} />
         </button>
       </div>
-
-      <div className="rounded-2xl bg-bg-subtle/60 border border-border-subtle overflow-hidden flex-1">
-        <div className="flex items-center gap-1.5 px-4 py-3 border-b border-border-subtle">
-          <div className="w-2.5 h-2.5 rounded-full bg-red-400" />
-          <div className="w-2.5 h-2.5 rounded-full bg-yellow-400" />
-          <div className="w-2.5 h-2.5 rounded-full bg-green-400" />
-          <span className="ml-3 text-[11px] text-text-muted font-mono">ver@production — deploy</span>
-        </div>
-        <div ref={outputRef} className="p-4 font-mono text-xs md:text-sm leading-relaxed h-[180px] overflow-y-auto">
-          {lines.map((line, i) => {
-            const isCmd = commands[i]?.kind === "cmd"
-            return (
-              <p key={i} className={isCmd ? "text-text-base mb-1" : "text-emerald-400 mb-1"}>
-                {isCmd && <span className="text-primary">$ </span>}
-                {line}
-                {i === lineIndex && (
-                  <span className="inline-block w-1.5 h-3.5 ml-1 align-middle animate-pulse bg-primary" />
-                )}
-              </p>
-            )
-          })}
-        </div>
+      <div ref={outputRef} className="p-4 font-mono text-xs md:text-sm leading-relaxed h-[180px] overflow-y-auto">
+        {lines.map((line, i) => {
+          const isCmd = commands[i]?.kind === "cmd"
+          return (
+            <p
+              key={i}
+              className={
+                isCmd ? "text-text-base mb-1" : line.startsWith("✓") ? "text-primary mb-1" : "text-text-muted mb-1"
+              }
+            >
+              {isCmd && <span className="text-primary">$ </span>}
+              {line}
+              {i === lineIndex && (
+                <span className="inline-block w-1.5 h-3.5 ml-1 align-middle animate-pulse bg-primary" />
+              )}
+            </p>
+          )
+        })}
       </div>
     </div>
   )
 }
+

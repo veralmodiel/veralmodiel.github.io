@@ -1,7 +1,6 @@
 "use client"
 
 import React, { useState } from "react"
-import { Globe2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 interface Region {
@@ -24,24 +23,14 @@ export const LocaleSwitcher: React.FC = () => {
   const region = regions.find((r) => r.id === regionId) ?? regions[0]
 
   return (
-    <div className="glass glow-border p-8 rounded-[32px] h-full flex flex-col">
-      <div className="flex items-center gap-3 mb-2">
-        <div className="p-2.5 bg-bg-subtle/50 rounded-xl">
-          <Globe2 size={20} className="text-lime-400" />
-        </div>
-        <h3 className="text-xl font-bold tracking-tight">Multi-Region Storefront</h3>
-      </div>
-      <p className="text-sm text-text-muted mb-6">
-        Same product, localised currency, date format and timezone. Built for clients running AU and Singapore storefronts side by side.
-      </p>
-
-      <div className="flex gap-2 mb-6">
+    <>
+      <div className="grid grid-cols-3 gap-2 mb-6">
         {regions.map((r) => (
           <button
             key={r.id}
             onClick={() => setRegionId(r.id)}
             className={cn(
-              "flex-1 px-3 py-2 rounded-xl text-xs font-bold border transition-all",
+              "label min-w-0 px-2 py-2 leading-tight border transition-colors",
               regionId === r.id
                 ? "border-primary text-primary bg-primary/10"
                 : "border-border-subtle text-text-muted hover:border-primary/30"
@@ -67,6 +56,6 @@ export const LocaleSwitcher: React.FC = () => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }

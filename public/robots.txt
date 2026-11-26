@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://veralmodiel.github.io/sitemap.xml

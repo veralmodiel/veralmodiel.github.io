@@ -2,7 +2,7 @@
 
 import React, { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { ShoppingCart, Minus, Plus, Check } from "lucide-react"
+import { Minus, Plus, Check } from "lucide-react"
 
 interface Product {
   id: string
@@ -32,25 +32,16 @@ export const CartCalculator: React.FC = () => {
   }
 
   return (
-    <div className="glass glow-border p-8 rounded-[32px] h-full flex flex-col">
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-3">
-          <div className="p-2.5 bg-bg-subtle/50 rounded-xl">
-            <ShoppingCart size={20} className="text-teal-400" />
-          </div>
-          <h3 className="text-xl font-bold tracking-tight">Cart & Checkout</h3>
-        </div>
-        <span className="text-xs font-bold text-text-muted">{itemCount} item{itemCount === 1 ? "" : "s"}</span>
+    <>
+      <div className="flex justify-end mb-4">
+        <span className="label">{itemCount} item{itemCount === 1 ? "" : "s"}</span>
       </div>
-      <p className="text-sm text-text-muted mb-6">
-        Live quantity and pricing logic, the everyday plumbing behind Shopify and WooCommerce storefronts.
-      </p>
 
       <div className="space-y-3 flex-1">
         {products.map((product) => (
           <div key={product.id} className="flex items-center justify-between p-4 rounded-2xl bg-bg-subtle/50 border border-border-subtle">
             <div>
-              <div className="text-sm font-bold">{product.name}</div>
+              <div className="text-sm text-text-base">{product.name}</div>
               <div className="text-xs text-text-muted">${product.price.toFixed(2)}</div>
             </div>
             <div className="flex items-center gap-3">
@@ -97,6 +88,6 @@ export const CartCalculator: React.FC = () => {
           </AnimatePresence>
         </button>
       </div>
-    </div>
+    </>
   )
 }

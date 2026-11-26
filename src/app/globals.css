@@ -1,171 +1,195 @@
 @import "tailwindcss";
 
+/* Near-black, off-white, one orange accent (v2). Sans headings, mono body/labels, hairlines, no radius. */
 :root {
-  color-scheme: light dark;
-  --bg-base: #f8fafc;
-  --bg-subtle: #f1f5f9;
-  --bg-card: rgba(255, 255, 255, 0.7);
-  --text-base: #0f172a;
-  --text-muted: #1e293b;
-  --primary: #2563eb;
-  --secondary: #1e3a8a;
-  --accent: #06b6d4;
-  --border-subtle: rgba(0, 0, 0, 0.15);
-  
-  --mouse-x: 50%;
-  --mouse-y: 50%;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg-base: #020617;
-    --bg-subtle: #0f172a;
-    --bg-card: rgba(15, 23, 42, 0.5);
-    --text-base: #f8fafc;
-    --text-muted: #94a3b8;
-    --primary: #3b82f6;
-    --secondary: #5b7fd6;
-    --accent: #22d3ee;
-    --border-subtle: rgba(255, 255, 255, 0.15);
-  }
-}
-
-.dark {
   color-scheme: dark;
-  --bg-base: #020617;
-  --bg-subtle: #0f172a;
-  --bg-card: rgba(15, 23, 42, 0.5);
-  --text-base: #f8fafc;
-  --text-muted: #94a3b8;
-  --primary: #3b82f6;
-  --secondary: #5b7fd6;
-  --accent: #22d3ee;
-  --border-subtle: rgba(255, 255, 255, 0.15);
+  --bg-base: #111111;
+  --bg-subtle: #181818;
+  --bg-card: transparent;
+  --text-base: #f2f2ee;
+  --text-muted: #777777;
+  --primary: #ff5a1f;
+  --secondary: #ff9152;
+  --accent: #9a9a9a;
+  --border-subtle: rgba(255, 255, 255, 0.14);
+  --border-hairline: rgba(255, 255, 255, 0.14);
 }
 
 .light {
   color-scheme: light;
-  --bg-base: #f8fafc;
-  --bg-subtle: #f1f5f9;
-  --bg-card: rgba(255, 255, 255, 0.7);
-  --text-base: #0f172a;
-  --text-muted: #1e293b;
-  --primary: #2563eb;
-  --secondary: #1e3a8a;
-  --accent: #06b6d4;
-  --border-subtle: rgba(0, 0, 0, 0.15);
+  --bg-base: #efeee9;
+  --bg-subtle: #e6e5df;
+  --bg-card: transparent;
+  --text-base: #111111;
+  --text-muted: #707070;
+  --primary: #d14a1f;
+  --secondary: #b35a1f;
+  --accent: #666666;
+  --border-subtle: rgba(0, 0, 0, 0.16);
+  --border-hairline: rgba(0, 0, 0, 0.16);
 }
 
 @theme {
-  --font-sans: var(--font-jakarta);
-  --font-mono: var(--font-share-tech-mono);
-  
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
   --color-accent: var(--accent);
-  
+
   --color-bg-base: var(--bg-base);
   --color-bg-subtle: var(--bg-subtle);
   --color-bg-card: var(--bg-card);
-  
+
   --color-text-base: var(--text-base);
   --color-text-muted: var(--text-muted);
-  
+
   --color-border-subtle: var(--border-subtle);
-  --color-border-glow: rgba(59, 130, 246, 0.5);
+  --color-border-hairline: var(--border-hairline);
+  --color-border-glow: var(--border-subtle);
 }
 
 @layer base {
   * {
     @apply border-border-subtle;
   }
-  
+
   html, body {
-    scroll-behavior: smooth;
     overflow-x: clip;
-    @apply bg-bg-base text-text-base antialiased;
+    @apply bg-bg-base text-text-base antialiased font-mono;
   }
 
-  body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 100;
-    background: radial-gradient(
-      600px circle at var(--mouse-x) var(--mouse-y),
-      color-mix(in srgb, var(--primary), transparent 95%),
-      transparent 80%
-    );
+  body {
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  section[id] {
+    scroll-margin-top: 6.25rem;
+  }
+  @media (min-width: 768px) {
+    section[id] {
+      scroll-margin-top: 4rem;
+    }
+  }
+
+  ::selection {
+    background: var(--text-base);
+    color: var(--bg-base);
   }
 }
 
 @layer utilities {
-  .glass {
-    @apply bg-bg-card backdrop-blur-xl border border-border-subtle shadow-2xl;
+  /* Content column: sits right of the fixed index rail on desktop. */
+  /* Full width with fluid side padding; centred past 1920px where the grid would over-stretch. */
+  .shell {
+    width: 100%;
+    max-width: 1920px;
+    margin-inline: auto;
+    padding-inline: clamp(1.5rem, 4vw, 6rem);
+  }
+
+  .label {
+    @apply font-mono text-[11px] uppercase tracking-[0.12em] text-text-muted;
+  }
+
+  .figure-frame {
+    @apply relative border border-border-hairline bg-bg-base;
+  }
+
+  /* Legacy utilities kept so older components flatten into the new system. */
+  .glass,
+  .panel {
+    @apply bg-transparent border border-border-hairline;
   }
 
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-linear-to-r from-primary via-secondary to-accent;
+    color: var(--text-base);
   }
 
+  .glow-btn,
+  .noise,
   .grid-overlay {
-    background-image:
-      linear-gradient(to right, color-mix(in srgb, var(--text-base), transparent 95%) 1px, transparent 1px),
-      linear-gradient(to bottom, color-mix(in srgb, var(--text-base), transparent 95%) 1px, transparent 1px);
-    background-size: 64px 64px;
-    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
-    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
-  }
-
-  .glow-btn {
-    box-shadow: 0 0 0 1px color-mix(in srgb, var(--primary), transparent 60%), 0 8px 40px -8px color-mix(in srgb, var(--primary), transparent 40%);
-  }
-
-  .glow-border {
-    position: relative;
-  }
-
-  .glow-border::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 1px;
-    background: radial-gradient(
-      400px circle at var(--mouse-x) var(--mouse-y),
-      rgba(59, 130, 246, 0.4),
-      transparent 40%
-    );
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    opacity: 0;
-    transition: opacity 0.5s;
-    pointer-events: none;
-  }
-
-  .glow-border:hover::after {
-    opacity: 1;
-  }
-  
-  .noise {
-    /* background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"); */
-    opacity: 0.05;
-    pointer-events: none;
+    box-shadow: none;
+    background-image: none;
   }
 }
 
-/* Custom Scrollbar */
+/*
+ * Unlayered on purpose: these beat Tailwind utilities, so every leftover
+ * rounded-*, font-bold, shadow-* class in older components is flattened
+ * without hunting each one down.
+ */
+*,
+*::before,
+*::after {
+  border-radius: 0;
+}
+
+strong, b, button {
+  font-weight: 400;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.035em;
+}
+
+h4, h5, h6 {
+  font-weight: 400;
+}
+
+/* Galaxy backdrop: dark mode only. */
+.nebula {
+  background:
+    radial-gradient(55% 45% at 88% 8%, color-mix(in srgb, var(--primary) 7%, transparent), transparent 70%),
+    radial-gradient(45% 40% at 6% 92%, rgba(140, 150, 255, 0.035), transparent 70%);
+}
+.light .starfield {
+  display: none;
+}
+
+/* Cursor follower: square outline that trails the pointer. */
+.cursor-follower span {
+  position: absolute;
+  left: -12px;
+  top: -12px;
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--primary);
+  opacity: 0.55;
+  transition: scale 0.25s ease, opacity 0.2s ease, background-color 0.25s ease;
+}
+.cursor-follower[data-state="active"] span {
+  scale: 1.6;
+  opacity: 0.9;
+  background-color: color-mix(in srgb, var(--primary) 12%, transparent);
+}
+.cursor-follower[data-state="hidden"] span {
+  opacity: 0;
+  scale: 0.6;
+}
+.cursor-follower.is-pressed span {
+  scale: 0.8;
+}
+
+[class*="shadow"] {
+  box-shadow: none;
+}
+
+[class*="backdrop-blur"] {
+  backdrop-filter: none;
+}
+
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-bg-base;
+  background: var(--bg-base);
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-slate-800 rounded-full hover:bg-slate-700 transition-colors;
+  background: var(--border-subtle);
 }
