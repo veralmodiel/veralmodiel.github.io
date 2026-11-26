@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useRef } from "react"
+import dynamic from "next/dynamic"
 import { motion } from "framer-motion"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
@@ -8,9 +9,12 @@ import { useGSAP } from "@gsap/react"
 import { ArrowRight } from "lucide-react"
 import { SectionMarker } from "@/components/ui/section-marker"
 import { FigCaption } from "@/components/ui/fig-caption"
-import { HeroCanvas } from "@/components/hero/hero-canvas"
 import { WordStack } from "@/components/hero/word-stack"
 import { StatFigure } from "@/components/stats/stat-figure"
+
+const HeroCanvas = dynamic(() => import("@/components/hero/hero-canvas").then((m) => m.HeroCanvas), {
+  ssr: false,
+})
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger, useGSAP)
