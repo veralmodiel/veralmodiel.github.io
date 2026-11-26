@@ -1,7 +1,6 @@
 "use client"
 
 import React, { useState } from "react"
-import { Palette } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 interface Theme {
@@ -24,17 +23,7 @@ export const CampaignThemer: React.FC = () => {
   const active = themes.find((t) => t.id === activeId) ?? themes[0]
 
   return (
-    <div className="glass glow-border p-8 rounded-[32px] h-full flex flex-col">
-      <div className="flex items-center gap-3 mb-2">
-        <div className="p-2.5 bg-bg-subtle/50 rounded-xl">
-          <Palette size={20} className="text-amber-400" />
-        </div>
-        <h3 className="text-xl font-bold tracking-tight">Campaign Themer</h3>
-      </div>
-      <p className="text-sm text-text-muted mb-6">
-        One layout, four brands. Built for teams that need a fresh event or campaign page every few weeks.
-      </p>
-
+    <>
       <div className={cn("rounded-2xl p-8 mb-6 flex-1 flex items-center justify-center text-center bg-linear-to-br", active.gradient)}>
         <div>
           <div className="text-[10px] uppercase tracking-widest text-white/70 mb-2">Now Announcing</div>
@@ -58,6 +47,6 @@ export const CampaignThemer: React.FC = () => {
           </button>
         ))}
       </div>
-    </div>
+    </>
   )
 }

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react"
 import { Reorder, useDragControls } from "framer-motion"
-import { GripVertical, LayoutTemplate } from "lucide-react"
+import { GripVertical } from "lucide-react"
 
 interface Block {
   id: string
@@ -47,22 +47,16 @@ export const BlockBuilder: React.FC = () => {
   const [blocks, setBlocks] = useState(initialBlocks)
 
   return (
-    <div className="glass glow-border p-8 rounded-[32px] h-full flex flex-col">
-      <div className="flex items-center gap-3 mb-2">
-        <div className="p-2.5 bg-bg-subtle/50 rounded-xl">
-          <LayoutTemplate size={20} className="text-sky-400" />
-        </div>
-        <h3 className="text-xl font-bold tracking-tight">Page Builder</h3>
-      </div>
-      <p className="text-sm text-text-muted mb-6">
-        Drag to reorder sections, the same block-based thinking behind every WordPress, Shopify and Webflow page.
-      </p>
-
-      <Reorder.Group axis="y" values={blocks} onReorder={setBlocks} className="space-y-3">
-        {blocks.map((block) => (
-          <BlockItem key={block.id} block={block} />
-        ))}
-      </Reorder.Group>
-    </div>
+    <Reorder.Group
+      axis="y"
+      values={blocks}
+      onReorder={setBlocks}
+      data-lenis-prevent
+      className="space-y-3 flex-1"
+    >
+      {blocks.map((block) => (
+        <BlockItem key={block.id} block={block} />
+      ))}
+    </Reorder.Group>
   )
 }

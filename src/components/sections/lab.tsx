@@ -4,6 +4,7 @@ import React from "react"
 import { labItems } from "@/lib/lab-items"
 import { SectionMarker } from "@/components/ui/section-marker"
 import { useSectionReveal } from "@/hooks/use-section-reveal"
+import { LabCard } from "@/components/lab/lab-card"
 
 export const Lab: React.FC = () => {
   const headerRef = useSectionReveal<HTMLDivElement>()
@@ -28,7 +29,9 @@ export const Lab: React.FC = () => {
         <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {labItems.map((item) => (
             <div key={item.id} className="reveal-card">
-              {item.node}
+              <LabCard index={item.index} title={item.title} blurb={item.blurb} Icon={item.Icon} iconColor={item.iconColor}>
+                {item.node}
+              </LabCard>
             </div>
           ))}
         </div>

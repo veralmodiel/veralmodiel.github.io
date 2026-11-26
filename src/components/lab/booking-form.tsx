@@ -2,7 +2,7 @@
 
 import React, { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { CalendarCheck, Minus, Plus, Check } from "lucide-react"
+import { Minus, Plus, Check } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 export const BookingForm: React.FC = () => {
@@ -31,19 +31,8 @@ export const BookingForm: React.FC = () => {
   }
 
   return (
-    <div className="glass glow-border p-8 rounded-[32px] h-full flex flex-col">
-      <div className="flex items-center gap-3 mb-2">
-        <div className="p-2.5 bg-bg-subtle/50 rounded-xl">
-          <CalendarCheck size={20} className="text-amber-400" />
-        </div>
-        <h3 className="text-xl font-bold tracking-tight">Booking Enquiry</h3>
-      </div>
-      <p className="text-sm text-text-muted mb-6">
-        Real-time validation for the enquiry and booking forms that hospitality and events sites run on.
-      </p>
-
-      <AnimatePresence mode="wait">
-        {submitted ? (
+    <AnimatePresence mode="wait">
+      {submitted ? (
           <motion.div
             key="success"
             initial={{ opacity: 0, y: 10 }}
@@ -131,7 +120,6 @@ export const BookingForm: React.FC = () => {
             </button>
           </motion.form>
         )}
-      </AnimatePresence>
-    </div>
+    </AnimatePresence>
   )
 }

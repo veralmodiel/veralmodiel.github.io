@@ -65,9 +65,8 @@ export const LiveRepos: React.FC = () => {
   }, [])
 
   return (
-    <div className="glass glow-border p-8 rounded-[32px] h-full flex flex-col">
-      <div className="flex items-center justify-between mb-6">
-        <h3 className="text-xl font-bold tracking-tight">Live from GitHub</h3>
+    <>
+      <div className="flex justify-end mb-4">
         <a
           href={`https://github.com/${GITHUB_USERNAME}`}
           target="_blank"
@@ -139,6 +138,6 @@ export const LiveRepos: React.FC = () => {
           ))}
         </div>
       )}
-    </div>
+    </>
   )
 }
