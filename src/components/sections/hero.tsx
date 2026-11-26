@@ -42,7 +42,7 @@ function WordIndex() {
 
 export const Hero: React.FC = () => {
   return (
-    <section id="about" className="shell relative min-h-screen flex flex-col justify-between pt-[clamp(7rem,17svh,9rem)] md:pt-[clamp(5rem,12svh,7rem)] pb-[clamp(1.5rem,4svh,2.5rem)]">
+    <section id="about" className="shell relative min-h-svh flex flex-col justify-between pt-[clamp(7rem,17svh,9rem)] md:pt-[clamp(5rem,12svh,7rem)] pb-[clamp(1.5rem,4svh,2.5rem)]">
       {/* Top: headline + word index */}
       <div className="grid grid-cols-12 gap-6">
         <div className="col-span-12 md:col-span-8">
