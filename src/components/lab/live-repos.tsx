@@ -12,7 +12,8 @@ interface Repo {
   stargazers_count: number
   forks_count: number
   language: string | null
-  updated_at: string
+  /** Last push. GitHub's updated_at only changes with repo settings, not commits. */
+  pushed_at: string
 }
 
 const GITHUB_USERNAME = "veralmodiel"
@@ -48,7 +49,7 @@ export const LiveRepos: React.FC = () => {
 
   useEffect(() => {
     let cancelled = false
-    fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=5`)
+    fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=pushed&per_page=5`)
       .then((res) => {
         if (!res.ok) throw new Error("GitHub API error")
         return res.json()
@@ -115,7 +116,7 @@ export const LiveRepos: React.FC = () => {
                 <span className="text-sm text-text-base group-hover:text-primary transition-colors truncate">
                   {repo.name}
                 </span>
-                <span className="text-[10px] text-text-muted whitespace-nowrap">{timeAgo(repo.updated_at)}</span>
+                <span className="text-[10px] text-text-muted whitespace-nowrap">{timeAgo(repo.pushed_at)}</span>
               </div>
               {repo.description && (
                 <p className="text-xs text-text-muted mb-3 line-clamp-1">{repo.description}</p>
